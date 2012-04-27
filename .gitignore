@@ -1,0 +1,5 @@
+*.pidb
+*.userprefs
+.DS_Store
+unity/Library/
+
