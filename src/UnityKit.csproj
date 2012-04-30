@@ -43,24 +43,35 @@
     <Reference Include="System" />
     <Reference Include="UnityEditor">
       <HintPath>..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\deps\NLog.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="nunit.core">
       <HintPath>..\deps\nunit.core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="CSharpKit">
-      <HintPath>..\deps\Release\CSharpKit.dll</HintPath>
+      <HintPath>..\deps\CSharpKit.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\deps\nunit.framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="nunit.core.interfaces">
       <HintPath>..\deps\nunit.core.interfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GoKit">
+      <HintPath>..\deps\GoKit.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -82,5 +93,6 @@
     <Folder Include="Scene\" />
     <Folder Include="Validity\" />
     <Folder Include="VectorExtensions\" />
+    <Folder Include="Camera\" />
   </ItemGroup>
 </Project>

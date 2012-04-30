@@ -7,4 +7,9 @@ public class InputWorld : MonoBehaviour
     {
         print( "World tapped " + info );
     }
+
+    public void OnDrag( InputInfo info )
+    {
+        print( "Dragging " + info );
+    }
 }
