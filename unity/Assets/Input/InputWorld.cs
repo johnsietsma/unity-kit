@@ -3,13 +3,13 @@ using System.Collections;
 
 public class InputWorld : MonoBehaviour
 {
-    public void OnSingleTap( InputInfo info )
+    public void OnSingleTap( InputEvent inputEvent )
     {
-        print( "World tapped " + info );
+        print( "World tapped " + inputEvent );
     }
 
-    public void OnDrag( InputInfo info )
+    public void OnDrag( InputEvent inputEvent )
     {
-        print( "Dragging " + info );
+        print( "Dragging " + inputEvent );
     }
 }
