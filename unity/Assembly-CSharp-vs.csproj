@@ -55,6 +55,9 @@
  <Reference Include="Assets\Plugins\CSharpKit">
  <HintPath>Assets\Plugins\CSharpKit.dll</HintPath>
  </Reference>
+ <Reference Include="Assets\Plugins\GoKit">
+ <HintPath>Assets\Plugins\GoKit.dll</HintPath>
+ </Reference>
  <Reference Include="Assets\Plugins\NLog">
  <HintPath>Assets\Plugins\NLog.dll</HintPath>
  </Reference>
@@ -69,9 +72,6 @@
  </Reference>
  <Reference Include="Assets\Plugins\UnityKit">
  <HintPath>Assets\Plugins\UnityKit.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Plugins\GoKit">
- <HintPath>Assets\Plugins\GoKit.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
