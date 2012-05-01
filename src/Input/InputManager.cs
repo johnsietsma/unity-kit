@@ -46,40 +46,38 @@ public class InputManager : MonoBehaviour
 
             Vector3 tapStart = TapStart();
             if( tapStart != Vector3.zero ) {
-
                 touchState = TouchState.TapDown;
-
-                // Fill in touch info
-                currTouch.startPos = tapStart;
                 currTouch.pos = tapStart;
                 currTouch.time = Time.time;
-                currTouch.hit = Raycast( tapStart );
+
+                InputEvent inputEvent = MakeHitInputEvent();
 
                 // Send messages
                 if( currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
-                    SendDoubleTapMessage( currTouch );
+                    SendDoubleTapMessage( inputEvent );
 
                 }
                 else {
-                    SendSingleTapMessage( currTouch );  // Sends both a single and double tap for reponsiveness
+                    SendSingleTapMessage( inputEvent );  // Sends both a single and double tap for reponsiveness
                 }
 
                 lastTouch = currTouch;
             }
         }
-
-        if( touchState == TouchState.TapDown ) {
-            Vector3 tapDown = TapDown();
-            if( tapDown != Vector3.zero ) {
-                currTouch.pos = tapDown;
-                currTouch.time = Time.time;
-                // no raycast for drag, leave initial hit
-                SendDragMessage( currTouch );
+        else if( touchState == TouchState.TapDown ) {
+                Vector3 tapDown = TapDown();
+                if( tapDown != Vector3.zero ) {
+                    if( !tapDown.Approx( lastTouch.pos ) ) {
+                        currTouch.pos = tapDown;
+                        currTouch.time = Time.time;
+                        SendDragMessage( MakeInputEvent() );  // No raycast for drag
+                        lastTouch = currTouch;
+                    }
+                }
+                else {
+                    touchState = TouchState.TapUp;
+                }
             }
-            else {
-                touchState = TouchState.TapUp;
-            }
-        }
     }
     #endregion
 
@@ -110,26 +108,27 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region Private helpers
-    private void SendSingleTapMessage( InputInfo touchInfo )
+    private void SendSingleTapMessage( InputEvent inputEvent )
     {
-        DoSendMessage( "OnSingleTap", touchInfo );
+        DoSendMessage( "OnSingleTap", inputEvent );
     }
 
-    private void SendDoubleTapMessage( InputInfo touchInfo )
+    private void SendDoubleTapMessage( InputEvent inputEvent )
     {
-        DoSendMessage( "OnDoubleTap", touchInfo );
+        DoSendMessage( "OnDoubleTap", inputEvent );
     }
 
-    private void SendDragMessage( InputInfo touchInfo )
+    private void SendDragMessage( InputEvent inputEvent )
     {
-        DoSendMessage( "OnDrag", touchInfo );
+        DoSendMessage( "OnDrag", inputEvent );
     }
 
-    private void DoSendMessage( string msgName, InputInfo touchInfo )
+    private void DoSendMessage( string msgName, InputEvent inputEvent )
     {
+        //print( "Sending message: " + inputEvent );
         foreach( InputReceiver recv in inputReceivers ) {
-            recv.SendMessage( msgName, touchInfo, SendMessageOptions.DontRequireReceiver );
-            if( ScreenPointInRects( touchInfo.pos, recv.ignoreAreas ) )
+            recv.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
+            if( ScreenPointInRects( inputEvent.pos, recv.ignoreAreas ) )
                 break; // areas on higher levels swallow input
         }
     }
@@ -156,9 +155,47 @@ public class InputManager : MonoBehaviour
         return DefaultRaycastHit;
     }
 
+    private InputEvent MakeInputEvent()
+    {
+        return new InputEvent() {
+            lastPos = lastTouch.pos,
+            pos = currTouch.pos,
+            time = currTouch.time,
+        };
+
+    }
+
+    private InputEvent MakeHitInputEvent()
+    {
+        return new InputEvent() {
+            lastPos = lastTouch.pos,
+            pos = currTouch.pos,
+            time = currTouch.time,
+            hit = Raycast( currTouch.pos )
+        };
+    }
+
     private static int CompareInputReceivers( InputReceiver recv1, InputReceiver recv2 )
     {
         return recv2.level - recv1.level;  // highest goes first
     }
     #endregion
+
+    private struct InputInfo
+    {
+        public Vector3 pos;
+        public float time;
+
+        public void Reset()
+        {
+            pos = Vector3.zero;
+            time = 0;
+        }
+
+        public override string ToString()
+        {
+            return string.Format( "Pos:{0} Time:{1}", pos, time );
+        }
+    }
+
 }

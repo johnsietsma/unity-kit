@@ -84,7 +84,7 @@
     <Compile Include="Scene\Find.cs" />
     <Compile Include="VectorExtensions\Vector2Extensions.cs" />
     <Compile Include="VectorExtensions\Vector3Extensions.cs" />
-    <Compile Include="Input\InputInfo.cs" />
+    <Compile Include="Input\InputEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

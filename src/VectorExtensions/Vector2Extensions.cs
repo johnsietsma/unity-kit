@@ -11,4 +11,9 @@ public static class Vector2Extensions
     {
         return new Vector3( v.x, y, v.y );
     }
+
+    public static Vector3 AddZ( this Vector2 v, float z )
+    {
+        return new Vector3( v.x, v.y, z );
+    }
 }
