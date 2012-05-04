@@ -33,6 +33,11 @@ public static class Vector3Extensions
     {
         return new Vector2( v.x, v.z );
     }
+
+    public static Vector2 yz( this Vector3 v )
+    {
+        return new Vector2( v.y, v.z );
+    }
  
     public static Vector3 ToGround( this Vector3 v )
     {

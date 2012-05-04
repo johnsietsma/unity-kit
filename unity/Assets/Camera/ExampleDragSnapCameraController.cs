@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 
+[RequireComponent(typeof(DragSnapCamera))]
 public class ExampleDragSnapCameraController : MonoBehaviour
 {
     private DragSnapCamera dragSnapCamera;
@@ -18,8 +19,7 @@ public class ExampleDragSnapCameraController : MonoBehaviour
         if( snapPoints.Length > 0 ) {
             print( "Setting snap points" );
             dragSnapCamera.SnapPoints = snapPoints;
-            dragSnapCamera.DefaultSnapPoint = snapPoints[0];
-            dragSnapCamera.MoveToDefaultSnapPoint();
+            dragSnapCamera.Lock( snapPoints[0] );
         }
     }
 

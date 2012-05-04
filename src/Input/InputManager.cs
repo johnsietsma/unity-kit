@@ -13,7 +13,6 @@ public class InputManager : MonoBehaviour
 {
     public float doubleTapTimeDelta = 0.2f;
     public float deadZone = 0.01f;
-    public Camera raycastCamera;
     private enum TouchState
     {
         TapUp,
@@ -30,10 +29,6 @@ public class InputManager : MonoBehaviour
     {
         inputReceivers = Find.SceneObjects<InputReceiver>();
         Array.Sort( inputReceivers, CompareInputReceivers );
-
-        if( raycastCamera == null ) {
-            raycastCamera = Camera.main;
-        }
     }
 
     void Update()
@@ -66,19 +61,34 @@ public class InputManager : MonoBehaviour
         }
         else if( touchState == TouchState.TapDown ) {
                 Vector3 tapDown = TapDown();
+                currTouch.time = Time.time;
                 if( tapDown != Vector3.zero ) {
                     if( !tapDown.Approx( lastTouch.pos ) ) {
                         currTouch.pos = tapDown;
-                        currTouch.time = Time.time;
                         SendDragMessage( MakeInputEvent() );  // No raycast for drag
                         lastTouch = currTouch;
                     }
                 }
                 else {
                     touchState = TouchState.TapUp;
+                    currTouch.pos = Vector3.zero;
+                    SendTapUpMessage( MakeInputEvent() );
                 }
             }
     }
+    #endregion
+
+    #region Public static helpers
+    public static RaycastHit Pick( Camera camera, Vector3 point )
+    {
+        Ray ray = camera.ScreenPointToRay( point );
+        RaycastHit hit;
+        if( Physics.Raycast( ray, out hit ) ) {
+            return hit;
+        }
+        return DefaultRaycastHit;
+    }
+
     #endregion
 
     #region Input helpers
@@ -118,6 +128,11 @@ public class InputManager : MonoBehaviour
         DoSendMessage( "OnDoubleTap", inputEvent );
     }
 
+    private void SendTapUpMessage( InputEvent inputEvent )
+    {
+        DoSendMessage( "OnTapUp", inputEvent );
+    }
+
     private void SendDragMessage( InputEvent inputEvent )
     {
         DoSendMessage( "OnDrag", inputEvent );
@@ -145,16 +160,6 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
-    private RaycastHit Raycast( Vector3 point )
-    {
-        Ray ray = raycastCamera.ScreenPointToRay( point );
-        RaycastHit hit;
-        if( Physics.Raycast( ray, out hit ) ) {
-            return hit;
-        }
-        return DefaultRaycastHit;
-    }
-
     private InputEvent MakeInputEvent()
     {
         return new InputEvent() {
@@ -171,7 +176,6 @@ public class InputManager : MonoBehaviour
             lastPos = lastTouch.pos,
             pos = currTouch.pos,
             time = currTouch.time,
-            hit = Raycast( currTouch.pos )
         };
     }
 
