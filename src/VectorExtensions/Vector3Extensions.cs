@@ -58,4 +58,13 @@ public static class Vector3Extensions
     {
         return new Vector3( Mathf.Abs( v.x ), Mathf.Abs( v.y ), Mathf.Abs( v.z ) );
     }
+
+    public static Vector3 LowPassFilter( this Vector3 v, Vector3 prevVector, float smoothFactor )
+    {
+        return new Vector3(
+            Filter.LowPass( prevVector.x, v.x, smoothFactor ),
+            Filter.LowPass( prevVector.y, v.y, smoothFactor ),
+            Filter.LowPass( prevVector.z, v.z, smoothFactor )
+            );
+    }
 }

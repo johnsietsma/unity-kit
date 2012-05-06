@@ -9,24 +9,25 @@ public class DragSnapCamera : MonoBehaviour
 {
     #region Fields
     public Camera dragSnapCamera; // The camera to move, defaults to main.
-    public float snapDist = 0.4f;
     public float tweenTime = 1;
+    public float speedSmoothingFactor = 0.9f;
+    public float frictionFactor = 0.75f;
     private float cameraHeight;
-    private ICollection<Transform> snapPoints;  // The collection of points of interest to snap to.
     private Plane groundPlane; // This is used to find the world distance from screen space
 
-    private Vector3 dragPos; // The finger drag pos when we're unlocked.
+    private enum State
+    {
+        None,
+        Dragging,
+        Drifting,
+        Locked,
+        Tweening
+    };
+    private State state = State.None;
+    private Vector3 speed = Vector3.zero;
     private Transform currLockTarget; // The transform we are locked to
     private Vector3 currLockPosition; // The last known pos of the lock target
-
     private Tween cameraTween;
-    #endregion
-
-    #region Properties
-    public ICollection<Transform> SnapPoints {
-        get { return snapPoints; }
-        set { snapPoints = value; }
-    }
     #endregion
 
     #region Unity events
@@ -41,34 +42,14 @@ public class DragSnapCamera : MonoBehaviour
 
     void Update()
     {
-
-        if( dragPos == Vector3.zero ) {
-            if( currLockTarget != null && cameraTween.state != TweenState.Running ) {
-                // Lock target has moved
-                if( currLockTarget.position.Approx( currLockPosition ) )
-                    Lock( currLockTarget );
-            }
-            return;
+        switch( state ) {
+        case State.Locked:
+            UpdateLockTarget();
+            break;
+        case State.Drifting:
+            UpdateDrift();
+            break;
         }
-
-        // We're dragging, so stop tweening
-        cameraTween.pause();
-
-        Vector3 adjustedDragPos = dragPos;
-
-        /*Vector3 cameraGroundPos = CameraPosToGroundPlanePoint( dragPos );
-        Transform targetSnapTransform = snapPoints.FirstOrDefault( t => t.position.Approx( cameraGroundPos, snapDist ) );
-        if( targetSnapTransform != null ) {
-            Vector3 snapPos = PointToCameraPos( targetSnapTransform.position );
-            Vector3 deltaPos = dragPos - snapPos;
-            float deltaDistNorm = 1 - deltaPos.magnitude / snapDist;
-            deltaDistNorm = Mathf.Max( 0, deltaDistNorm );
-            adjustedDragPos = Vector3.Lerp( dragPos, snapPos, Mathf.Pow( deltaDistNorm, 0.2f ) );//deltaDistNorm*deltaDistNorm*deltaDistNorm );
-            //print( string.Format( "Target:{0} Snap:{1} Delta:{2} Norm:{3} Adj:{4}", dragPos, snapPos, deltaPos, deltaDistNorm, adjustedDragPos ) );
-        }*/
-        adjustedDragPos.y = cameraHeight;
-
-        dragSnapCamera.transform.position = adjustedDragPos;
     }
     #endregion
 
@@ -78,29 +59,31 @@ public class DragSnapCamera : MonoBehaviour
         RaycastHit hit = InputManager.Pick( Camera.main, inputEvent.pos );
         Transform hitTransform = hit.transform;
 
-        if( hitTransform == null || !snapPoints.Contains( hitTransform ) )
-            return;
-
         Lock( hitTransform );
     }
 
     void OnTapUp( InputEvent inputEvent )
     {
-        if( dragPos != Vector3.zero ) {
-            dragPos = Vector3.zero;
-            Lock( FindClosestSnapPoint( dragSnapCamera.transform.position ) );
+        if( state == State.Dragging ) {
+            state = State.Drifting;
         }
     }
 
     void OnDrag( InputEvent inputEvent )
     {
-        if( dragPos == Vector3.zero ) {
-            dragPos = dragSnapCamera.transform.position;
+        if( state != State.Drifting ) {
+            state = State.Dragging;
+            if( cameraTween != null )
+                cameraTween.pause();
         }
         Vector3 deltaPos = ScreenPointToGroundPlanePoint( inputEvent.pos ) - ScreenPointToGroundPlanePoint( inputEvent.lastPos );
-        dragPos = dragPos - deltaPos.xz().AddY( 0 );
+        deltaPos = -deltaPos.xz().AddY( 0 );
+        speed = speed.LowPassFilter( deltaPos / Time.deltaTime, speedSmoothingFactor );
+        dragSnapCamera.transform.Translate( deltaPos, Space.World );
     }
+    #endregion
 
+    #region Private helpers
     private Vector3 CameraPosToGroundPlanePoint( Vector3 cameraPos )
     {
         Ray ray = new Ray( cameraPos, dragSnapCamera.transform.forward );
@@ -138,21 +121,19 @@ public class DragSnapCamera : MonoBehaviour
         camPoint.y = cameraHeight;
         return camPoint;
     }
-    #endregion
 
-    #region Private helpers
-    private Transform FindClosestSnapPoint( Vector3 pos )
+    private void UpdateLockTarget()
     {
-        Transform closest = null;
-        float closestDist = float.MaxValue;
-        foreach( Transform t in snapPoints ) {
-            float dist = (t.position - pos).magnitude;
-            if( dist < closestDist ) {
-                closest = t;
-                closestDist = dist;
-            }
-        }
-        return closest;
+        // Lock target has moved
+        if( currLockTarget.position.Approx( currLockPosition ) )
+            Lock( currLockTarget );
+
+    }
+
+    private void UpdateDrift()
+    {
+        speed *= frictionFactor;
+        dragSnapCamera.transform.Translate( speed * Time.deltaTime, Space.World );
     }
     #endregion
 

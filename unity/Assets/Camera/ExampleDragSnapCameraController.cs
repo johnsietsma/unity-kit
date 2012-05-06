@@ -18,7 +18,7 @@ public class ExampleDragSnapCameraController : MonoBehaviour
 
         if( snapPoints.Length > 0 ) {
             print( "Setting snap points" );
-            dragSnapCamera.SnapPoints = snapPoints;
+            //dragSnapCamera.SnapPointsPoints = snapPoints;
             dragSnapCamera.Lock( snapPoints[0] );
         }
     }
