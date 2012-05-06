@@ -41,10 +41,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEditor">
-      <HintPath>..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -53,20 +49,8 @@
       <HintPath>..\deps\NLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>..\deps\nunit.core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="CSharpKit">
       <HintPath>..\deps\CSharpKit.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\deps\nunit.framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.core.interfaces">
-      <HintPath>..\deps\nunit.core.interfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="GoKit">
@@ -78,8 +62,6 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\InputReceiver.cs" />
-    <Compile Include="UnitTesting\NUnit\ConsoleListener.cs" />
-    <Compile Include="UnitTesting\NUnit\NUnitRunner.cs" />
     <Compile Include="Validity\Ensure.cs" />
     <Compile Include="Scene\Find.cs" />
     <Compile Include="VectorExtensions\Vector2Extensions.cs" />
@@ -90,7 +72,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Input\" />
-    <Folder Include="UnitTesting\" />
     <Folder Include="Scene\" />
     <Folder Include="Validity\" />
     <Folder Include="VectorExtensions\" />

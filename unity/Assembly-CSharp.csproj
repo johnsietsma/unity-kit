@@ -60,15 +60,6 @@
  <Reference Include="Assets\Plugins\NLog">
  <HintPath>Assets\Plugins\NLog.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Plugins\nunit.core">
- <HintPath>Assets\Plugins\nunit.core.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Plugins\nunit.core.interfaces">
- <HintPath>Assets\Plugins\nunit.core.interfaces.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Plugins\nunit.framework">
- <HintPath>Assets\Plugins\nunit.framework.dll</HintPath>
- </Reference>
  <Reference Include="Assets\Plugins\UnityKit">
  <HintPath>Assets\Plugins\UnityKit.dll</HintPath>
  </Reference>
