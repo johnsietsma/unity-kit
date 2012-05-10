@@ -35,7 +35,7 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp bin/Debug/UnityKit.dll ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
+        <Command type="AfterBuild" command="cp bin/Release/UnityKit.dll ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

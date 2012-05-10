@@ -79,6 +79,7 @@ public class DragSnapCamera : MonoBehaviour
         Vector3 deltaPos = ScreenPointToGroundPlanePoint( inputEvent.pos ) - ScreenPointToGroundPlanePoint( inputEvent.lastPos );
         deltaPos = -deltaPos.xz().AddY( 0 );
         speed = speed.LowPassFilter( deltaPos / Time.deltaTime, speedSmoothingFactor );
+        speed.y = 0;
         dragSnapCamera.transform.Translate( deltaPos, Space.World );
     }
     #endregion
@@ -125,8 +126,10 @@ public class DragSnapCamera : MonoBehaviour
     private void UpdateLockTarget()
     {
         // Lock target has moved
-        if( currLockTarget.position.Approx( currLockPosition ) )
+        if( !currLockTarget.position.Approx( currLockPosition ) ) {
+            print( "Target moved - target:" + currLockTarget.position.ToStringf() + " curr pos:" +currLockPosition.ToStringf() );
             Lock( currLockTarget );
+        }
 
     }
 
@@ -142,9 +145,12 @@ public class DragSnapCamera : MonoBehaviour
     {
         Check.NotNull( t, "Moving to a null transform" );
         Vector3 dest = PointToCameraPos( t.position );
-        cameraTween = dragSnapCamera.transform.positionTo( tweenTime, dest, false );
+        print( "Cam rot: " + dragSnapCamera.transform.rotation.eulerAngles.ToStringf() );
+        //cameraTween = dragSnapCamera.transform.positionTo( tweenTime, dest, false );
+        dragSnapCamera.transform.position = dest;
         currLockTarget = t;
         currLockPosition = t.position;
+        state = State.Locked;
     }
     #endregion
 }
