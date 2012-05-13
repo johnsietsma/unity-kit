@@ -20,9 +20,4 @@ public class InputGUI : MonoBehaviour
         }
         GUI.EndGroup();
     }
-
-    void OnSingleTap( InputEvent inputEvent )
-    {
-        print( "GUI tapped: " + inputEvent );
-    }
 }

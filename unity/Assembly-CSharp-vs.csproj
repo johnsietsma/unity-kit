@@ -47,7 +47,7 @@
      <Compile Include="Assets\Camera\ExampleDragSnapCameraController.cs" />
      <Compile Include="Assets\Input\InputExample.cs" />
      <Compile Include="Assets\Input\InputGUI.cs" />
-     <Compile Include="Assets\Input\InputWorld.cs" />
+     <Compile Include="Assets\Input\InputObject.cs" />
      <Compile Include="Assets\Validity\EnsureExample.cs" />
      <Compile Include="Assets\Validity\ExampleMonoBehaviour1.cs" />
      <Compile Include="Assets\Validity\ExampleMonoBehaviour2.cs" />
@@ -59,6 +59,15 @@
  </Reference>
  <Reference Include="Assets\Plugins\NLog">
  <HintPath>Assets\Plugins\NLog.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Plugins\nunit.core">
+ <HintPath>Assets\Plugins\nunit.core.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Plugins\nunit.core.interfaces">
+ <HintPath>Assets\Plugins\nunit.core.interfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Plugins\nunit.framework">
+ <HintPath>Assets\Plugins\nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="Assets\Plugins\UnityKit">
  <HintPath>Assets\Plugins\UnityKit.dll</HintPath>

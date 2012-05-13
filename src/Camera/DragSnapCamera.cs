@@ -146,8 +146,8 @@ public class DragSnapCamera : MonoBehaviour
         Check.NotNull( t, "Moving to a null transform" );
         Vector3 dest = PointToCameraPos( t.position );
         print( "Cam rot: " + dragSnapCamera.transform.rotation.eulerAngles.ToStringf() );
-        //cameraTween = dragSnapCamera.transform.positionTo( tweenTime, dest, false );
-        dragSnapCamera.transform.position = dest;
+        cameraTween = dragSnapCamera.transform.positionTo( tweenTime, dest, false );
+        //dragSnapCamera.transform.position = dest;
         currLockTarget = t;
         currLockPosition = t.position;
         state = State.Locked;

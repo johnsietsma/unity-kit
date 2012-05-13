@@ -1,34 +1,47 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /**
- * Central manager of all input.
+ * Central manager of all input in a scene.
  * Sends input messages to all recievers, allows ordering and swallowing of messages.
  * Raycasts to provide hit info.
  * Uses both touch and mouse input.
- *
- *
  */
 public class InputManager : MonoBehaviour
 {
     public float doubleTapTimeDelta = 0.2f;
     public float deadZone = 0.01f;
+    public List<InputReceiver> inputReceivers = new List<InputReceiver>();
     private enum TouchState
     {
         TapUp,
         TapDown
     };
-    private InputReceiver[] inputReceivers;
+
     private InputInfo currTouch = new InputInfo();
     private InputInfo lastTouch = new InputInfo();
     private TouchState touchState = TouchState.TapUp;
     private static readonly RaycastHit DefaultRaycastHit = new RaycastHit();
 
+    public void AddInputReceiver( InputReceiver inputReceiver )
+    {
+        inputReceivers.Add( inputReceiver );
+        inputReceivers.Sort( CompareInputReceivers );
+    }
+
     #region Unity events
     void Awake()
     {
-        inputReceivers = Find.SceneObjects<InputReceiver>();
-        Array.Sort( inputReceivers, CompareInputReceivers );
+        Check.Equal( 1, Find.SceneObjects<InputManager>().Length );//, "There should only be one InputManager per scene" );
+        //inputReceivers.AddRange( Find.SceneObjects<InputReceiver>() );
+    }
+
+    void Start()
+    {
+        // Camera may be assigned during Awake.
+        inputReceivers.Sort( CompareInputReceivers );
     }
 
     void Update()
@@ -135,14 +148,31 @@ public class InputManager : MonoBehaviour
 
     private void SendDragMessage( InputEvent inputEvent )
     {
-        DoSendMessage( "OnDrag", inputEvent );
+        DoSendMessage( "OnDrag", inputEvent, false );
     }
 
-    private void DoSendMessage( string msgName, InputEvent inputEvent )
+    private void DoSendMessage( string msgName, InputEvent inputEvent, bool pick=true )
     {
         //print( "Sending message: " + inputEvent );
+        Transform pickedObject = null;
+        Camera currPickCamera = null;
         foreach( InputReceiver recv in inputReceivers ) {
-            recv.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
+            // Receivers are sorted by camera depth, cycle to new camera if need be
+            if( currPickCamera != recv.inputCamera ) {
+                currPickCamera = recv.inputCamera;
+                pickedObject = null; // reset the picked object for new camera
+            }
+
+            if( pickedObject == null && pick ) {
+                pickedObject = Pick( currPickCamera, inputEvent.pos ).transform;
+            }
+
+            inputEvent.hit = pickedObject;
+
+            if( pickedObject && FindChild( recv.transform, pickedObject.transform ) || !pick ) {
+                recv.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
+            }
+
             if( ScreenPointInRects( inputEvent.pos, recv.ignoreAreas ) )
                 break; // areas on higher levels swallow input
         }
@@ -179,9 +209,23 @@ public class InputManager : MonoBehaviour
         };
     }
 
+    private bool FindChild( Transform parentTransform, Transform targetTransform )
+    {
+        if( parentTransform == targetTransform ) {
+            return true;
+        }
+        foreach( Transform childTransform in parentTransform ) {
+            if( childTransform == targetTransform )
+                return true;
+            if( FindChild( childTransform, childTransform ) )
+                return true;
+        }
+        return false;
+    }
+
     private static int CompareInputReceivers( InputReceiver recv1, InputReceiver recv2 )
     {
-        return recv2.level - recv1.level;  // highest goes first
+        return (int)(recv2.inputCamera.depth - recv1.inputCamera.depth);  // highest goes first
     }
     #endregion
 

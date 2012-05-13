@@ -22,7 +22,8 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp bin/Debug/UnityKit.dll ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
+        <Command type="AfterBuild" command="cp ${TargetFile} ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
+        <Command type="AfterBuild" command="cp ${TargetDir}/${TargetName}.mdb ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -49,10 +50,6 @@
       <HintPath>..\deps\NLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CSharpKit">
-      <HintPath>..\deps\CSharpKit.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="GoKit">
       <HintPath>..\deps\GoKit.dll</HintPath>
       <Private>False</Private>
@@ -76,5 +73,11 @@
     <Folder Include="Validity\" />
     <Folder Include="VectorExtensions\" />
     <Folder Include="Camera\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CSharpKit\CSharpKit.csproj">
+      <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
+      <Name>CSharpKit</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
