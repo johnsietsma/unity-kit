@@ -1,0 +1,7 @@
+CSHARPKIT_DIR=../../CSharpKit/bin/Debug/
+PLUGINS_DIR=../unity/Assets/Plugins/
+
+cp -v $CSHARPKIT_DIR/*.* ./
+
+cp -v ./*.* $PLUGINS_DIR
+

@@ -6,9 +6,12 @@ public class InputReceiver : MonoBehaviour
     // Optionally assign a camera for input ordering and object picking. Defaults to the main camera.
     public Camera inputCamera;
     public string cameraName;
+    public bool receiveAllInput = false;
 
     [HideInInspector]
     public Rect[] ignoreAreas = new Rect[0];
+
+    private InputManager inputManager;
 
     void Awake()
     {
@@ -21,7 +24,11 @@ public class InputReceiver : MonoBehaviour
             }
         }
 
-        InputManager inputManager = Ensure.SceneObject<InputManager>();
+        inputManager = Ensure.SceneObject<InputManager>();
         inputManager.AddInputReceiver( this );
+    }
+
+    void OnDestroy() {
+        inputManager.RemoveInputReceiver( this );
     }
 }

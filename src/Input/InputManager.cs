@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 
 /**
  * Central manager of all input in a scene.
@@ -17,13 +18,14 @@ public class InputManager : MonoBehaviour
     private enum TouchState
     {
         TapUp,
+        Dragging,
         TapDown
     };
 
     private InputInfo currTouch = new InputInfo();
     private InputInfo lastTouch = new InputInfo();
     private TouchState touchState = TouchState.TapUp;
-    private static readonly RaycastHit DefaultRaycastHit = new RaycastHit();
+    private Logger log;
 
     public void AddInputReceiver( InputReceiver inputReceiver )
     {
@@ -31,9 +33,15 @@ public class InputManager : MonoBehaviour
         inputReceivers.Sort( CompareInputReceivers );
     }
 
+    public void RemoveInputReceiver( InputReceiver inputReceiver )
+    {
+        inputReceivers.Remove( inputReceiver );
+    }
+
     #region Unity events
     void Awake()
     {
+        log = LogManager.GetLogger( "Input" );
         Check.Equal( 1, Find.SceneObjects<InputManager>().Length );//, "There should only be one InputManager per scene" );
         //inputReceivers.AddRange( Find.SceneObjects<InputReceiver>() );
     }
@@ -47,60 +55,79 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         if( touchState == TouchState.TapUp ) {
-            // Clear touch of tap is up for too long
-            if( currTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
-                currTouch.Reset();
-            }
-
-            Vector3 tapStart = TapStart();
-            if( tapStart != Vector3.zero ) {
-                touchState = TouchState.TapDown;
-                currTouch.pos = tapStart;
-                currTouch.time = Time.time;
-
-                InputEvent inputEvent = MakeHitInputEvent();
-
-                // Send messages
-                if( currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
-                    SendDoubleTapMessage( inputEvent );
-
-                }
-                else {
-                    SendSingleTapMessage( inputEvent );  // Sends both a single and double tap for reponsiveness
-                }
-
-                lastTouch = currTouch;
-            }
+            UpdateUpState();
         }
         else if( touchState == TouchState.TapDown ) {
-                Vector3 tapDown = TapDown();
-                currTouch.time = Time.time;
-                if( tapDown != Vector3.zero ) {
-                    if( !tapDown.Approx( lastTouch.pos ) ) {
-                        currTouch.pos = tapDown;
-                        SendDragMessage( MakeInputEvent() );  // No raycast for drag
-                        lastTouch = currTouch;
-                    }
+                UpdateDownState();
+            }
+            else if( touchState == TouchState.Dragging ) {
+                    UpdateDragState();
+                }
+    }
+
+    private void UpdateUpState()
+    {
+        // Clear touch of tap is up for too long
+        if( currTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
+            currTouch.Reset();
+        }
+
+        Vector3 tapStart = TapStart();
+        if( tapStart == Vector3.zero )
+            return;
+
+        touchState = TouchState.TapDown;
+        currTouch.pos = tapStart;
+        currTouch.time = Time.time;
+
+        SendTapDownMessage( MakeHitInputEvent() );
+    }
+
+    private void UpdateDownState()
+    {
+        Vector3 tapDown = TapDown();
+        currTouch.time = Time.time;
+        if( tapDown != Vector3.zero && (tapDown - currTouch.pos).magnitude > deadZone ) {
+            touchState = TouchState.Dragging;
+            lastTouch = currTouch;
+        }
+        else if( tapDown == Vector3.zero ) {
+                // tap up
+                if( lastTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
+                    SendDoubleTapMessage( MakeHitInputEvent() );
                 }
                 else {
-                    touchState = TouchState.TapUp;
-                    currTouch.pos = Vector3.zero;
-                    SendTapUpMessage( MakeInputEvent() );
+                    SendSingleTapMessage( MakeHitInputEvent() );
                 }
+                SendTapUpMessage( MakeHitInputEvent() );
+                lastTouch = currTouch;
+
+                touchState = TouchState.TapUp;
+                currTouch.pos = Vector3.zero;
+                SendTapMessage( MakeInputEvent() );
             }
+    }
+
+    private void UpdateDragState()
+    {
+        Vector3 tapDown = TapDown();
+        if( tapDown == Vector3.zero ) {
+            touchState = TouchState.TapUp;
+            SendTapUpMessage( MakeHitInputEvent() );
+            lastTouch = currTouch;
+            return;
+        }
+        else if( (tapDown - currTouch.pos).magnitude > deadZone ) {
+                currTouch.pos = tapDown;
+                SendDragMessage( MakeInputEvent() );  // No raycast for drag
+                lastTouch = currTouch;
+            }
+
     }
     #endregion
 
     #region Public static helpers
-    public static RaycastHit Pick( Camera camera, Vector3 point )
-    {
-        Ray ray = camera.ScreenPointToRay( point );
-        RaycastHit hit;
-        if( Physics.Raycast( ray, out hit ) ) {
-            return hit;
-        }
-        return DefaultRaycastHit;
-    }
+
 
     #endregion
 
@@ -141,41 +168,49 @@ public class InputManager : MonoBehaviour
         DoSendMessage( "OnDoubleTap", inputEvent );
     }
 
+    private void SendTapDownMessage( InputEvent inputEvent )
+    {
+        DoSendMessage( "OnTapDown", inputEvent, true );
+    }
+
     private void SendTapUpMessage( InputEvent inputEvent )
     {
         DoSendMessage( "OnTapUp", inputEvent );
     }
 
-    private void SendDragMessage( InputEvent inputEvent )
+    private void SendTapMessage( InputEvent inputEvent )
     {
-        DoSendMessage( "OnDrag", inputEvent, false );
+        DoSendMessage( "OnTap", inputEvent );
     }
 
-    private void DoSendMessage( string msgName, InputEvent inputEvent, bool pick=true )
+    private void SendDragMessage( InputEvent inputEvent )
     {
-        //print( "Sending message: " + inputEvent );
-        Transform pickedObject = null;
-        Camera currPickCamera = null;
-        foreach( InputReceiver recv in inputReceivers ) {
-            // Receivers are sorted by camera depth, cycle to new camera if need be
-            if( currPickCamera != recv.inputCamera ) {
-                currPickCamera = recv.inputCamera;
-                pickedObject = null; // reset the picked object for new camera
+        DoSendMessage( "OnDrag", inputEvent );
+    }
+
+    private void DoSendMessage( string msgName, InputEvent inputEvent, bool inputStart=false )
+    {
+        if( inputStart ) {
+            IEnumerable<InputReceiver> validInputReceviers = inputReceivers.FindAll( ir => !ScreenPointInRects( inputEvent.pos, ir.ignoreAreas ) );
+            foreach( InputReceiver inputReceiver in validInputReceviers ) {
+                RaycastHit hit = Picker.Pick( inputReceiver.inputCamera, inputEvent.pos );
+                currTouch.hit = hit.transform;
+                if( hit.transform != null && FindChild( inputReceiver.transform, hit.transform ) ) {
+                    currTouch.receiver = inputReceiver.transform;
+                    log.Trace( "Start input chain. Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
+                    break;
+                }
             }
-
-            if( pickedObject == null && pick ) {
-                pickedObject = Pick( currPickCamera, inputEvent.pos ).transform;
-            }
-
-            inputEvent.hit = pickedObject;
-
-            if( pickedObject && FindChild( recv.transform, pickedObject.transform ) || !pick ) {
-                recv.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
-            }
-
-            if( ScreenPointInRects( inputEvent.pos, recv.ignoreAreas ) )
-                break; // areas on higher levels swallow input
         }
+        inputEvent.hit = currTouch.hit;
+
+        if( currTouch.receiver != null ) {
+            log.Trace( "Sending message " + msgName + " to " + currTouch.receiver.name );
+            currTouch.receiver.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
+        }
+
+        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir => ir.receiveAllInput == true );
+        globalReceivers.ForEach( ir => ir.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver ) );
     }
 
     private bool ScreenPointInRects( Vector3 point3, Rect[] rects )
@@ -217,8 +252,9 @@ public class InputManager : MonoBehaviour
         foreach( Transform childTransform in parentTransform ) {
             if( childTransform == targetTransform )
                 return true;
-            if( FindChild( childTransform, childTransform ) )
+            if( FindChild( childTransform, childTransform ) ) {
                 return true;
+            }
         }
         return false;
     }
@@ -233,11 +269,15 @@ public class InputManager : MonoBehaviour
     {
         public Vector3 pos;
         public float time;
+        public Transform hit;
+        public Transform receiver;
 
         public void Reset()
         {
             pos = Vector3.zero;
             time = 0;
+            hit = null;
+            receiver = null;
         }
 
         public override string ToString()

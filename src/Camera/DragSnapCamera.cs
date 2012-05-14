@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 
 /**
  * The drag, snap camera moves around on the horizontal plane, and snapso to points of interest.
@@ -14,6 +15,7 @@ public class DragSnapCamera : MonoBehaviour
     public float frictionFactor = 0.75f;
     private float cameraHeight;
     private Plane groundPlane; // This is used to find the world distance from screen space
+    private Logger log;
 
     private enum State
     {
@@ -33,6 +35,7 @@ public class DragSnapCamera : MonoBehaviour
     #region Unity events
     void Awake()
     {
+        log = LogManager.GetLogger( "Camera" );
         dragSnapCamera = dragSnapCamera != null ? dragSnapCamera : Camera.main;
         Check.NotNull( dragSnapCamera, "No camera has been set" );
 
@@ -56,8 +59,7 @@ public class DragSnapCamera : MonoBehaviour
     #region Input events
     void OnDoubleTap( InputEvent inputEvent )
     {
-        RaycastHit hit = InputManager.Pick( Camera.main, inputEvent.pos );
-        Transform hitTransform = hit.transform;
+        Transform hitTransform = inputEvent.hit.transform;
 
         Lock( hitTransform );
     }
@@ -80,6 +82,7 @@ public class DragSnapCamera : MonoBehaviour
         deltaPos = -deltaPos.xz().AddY( 0 );
         speed = speed.LowPassFilter( deltaPos / Time.deltaTime, speedSmoothingFactor );
         speed.y = 0;
+        log.Trace( "Drag by " + deltaPos );
         dragSnapCamera.transform.Translate( deltaPos, Space.World );
     }
     #endregion
@@ -127,7 +130,7 @@ public class DragSnapCamera : MonoBehaviour
     {
         // Lock target has moved
         if( !currLockTarget.position.Approx( currLockPosition ) ) {
-            print( "Target moved - target:" + currLockTarget.position.ToStringf() + " curr pos:" +currLockPosition.ToStringf() );
+            print( "Target moved - target:" + currLockTarget.position.ToStringf() + " curr pos:" + currLockPosition.ToStringf() );
             Lock( currLockTarget );
         }
 
@@ -144,8 +147,9 @@ public class DragSnapCamera : MonoBehaviour
     public void Lock( Transform t )
     {
         Check.NotNull( t, "Moving to a null transform" );
+        log.Trace( "Locking on target " + t.name );
         Vector3 dest = PointToCameraPos( t.position );
-        print( "Cam rot: " + dragSnapCamera.transform.rotation.eulerAngles.ToStringf() );
+        //print( "Cam rot: " + dragSnapCamera.transform.rotation.eulerAngles.ToStringf() );
         cameraTween = dragSnapCamera.transform.positionTo( tweenTime, dest, false );
         //dragSnapCamera.transform.position = dest;
         currLockTarget = t;
