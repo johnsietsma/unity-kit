@@ -79,7 +79,7 @@ public class InputManager : MonoBehaviour
         touchState = TouchState.TapDown;
         currTouch.pos = tapStart;
         currTouch.time = Time.time;
-
+  
         SendTapDownMessage( MakeHitInputEvent() );
     }
 

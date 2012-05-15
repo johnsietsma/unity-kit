@@ -48,9 +48,11 @@
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\deps\NLog.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="GoKit">
       <HintPath>..\deps\GoKit.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +68,8 @@
     <Compile Include="Input\Picker.cs" />
     <Compile Include="Logging\Logging.cs" />
     <Compile Include="Logging\UnityConsoleTraceListener.cs" />
+    <Compile Include="Logging\UnityConsoleNlogTarget.cs" />
+    <Compile Include="Logging\TestFlightNLogTarget.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -80,6 +84,11 @@
     <ProjectReference Include="..\..\CSharpKit\CSharpKit.csproj">
       <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
       <Name>CSharpKit</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TestFlightUnity\src\TestFlightUnity\TestFlightUnity.csproj">
+      <Project>{E0BC4562-CB36-4DD6-AEAF-A6DBB5B2BFD4}</Project>
+      <Name>TestFlightUnity</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

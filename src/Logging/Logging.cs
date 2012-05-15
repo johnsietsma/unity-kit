@@ -1,15 +1,15 @@
 #define TRACE
-using UnityEngine;
 using System;
-using System.Collections;
-using System.Reflection;
-
+using System.Collections.Generic;
 using NLog;
-using NLog.Common;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
+using NLog.Targets.Wrappers;
+using UnityEngine;
 
+namespace UnityKit
+{
 // LogLevel is not serializable and can't be used in the Unity Editor.
 public enum LogLevelEnum
 {
@@ -29,50 +29,54 @@ public class LogSource
     public LogLevelEnum logLevel;
 }
 
-[Target("UnityConsole")]
-public class UnityConsoleTarget : TargetWithLayout
-{
-    protected override void Write( LogEventInfo logEvent )
-    {
-        string logMsg = this.Layout.Render( logEvent );
-        if( logEvent.Level == LogLevel.Error ) {
-            Debug.LogError( logMsg );
-        }
-        else if( logEvent.Level == LogLevel.Warn ) {
-                Debug.LogWarning( logMsg );
-            }
-            else {
-                Debug.Log( logMsg );
-            }
-    }
-}
-
 public class Logging : MonoBehaviour
 {
- 
+    public string[] logTargets = new string[] {"UnityConsoleNLogTarget", "TestFlightNLogTarget" };
     public LogSource[] logSources;
  
     void Awake()
     {
-        UnityConsoleTarget unityTarget;
         LoggingConfiguration config = new LoggingConfiguration();
-        unityTarget = new UnityConsoleTarget();
-        unityTarget.Layout = new SimpleLayout( "[${logger}] ${message}" );
-        config.AddTarget( "UnityConsole", unityTarget ); // LogManager.Configuration.AddTarget() doesn't work
+
+        List<TargetWithLayout> targets = new List<TargetWithLayout>();
+        for( int i=0; i<logTargets.Length; i++ ) {
+            Type t = Type.GetType( logTargets[i] );
+            if( t == null ) {
+                Debug.LogError( "Could not get logger target of type " + logTargets[i] );
+                Debug.Log( "Test: " + config.FindTargetByName( "UnityConsole" ) );
+                continue;
+            }
+            TargetWithLayout target = System.Activator.CreateInstance( t ) as TargetWithLayout;
+            if( target == null ) {
+                Debug.LogError( "Couldn't instantiate logger: " + logTargets[i] );
+                continue;
+            }
+            target.Layout = new SimpleLayout( "[${logger}] ${message}" );
+            targets.Add( target );
+        }
+        SplitGroupTarget splitTarget = new SplitGroupTarget( targets.ToArray() );
+
+
+        config.AddTarget( "Split Target", splitTarget );
         LogManager.Configuration = config;
 
         for( int i=0; i<logSources.Length; i++ ) {
             string logName = logSources[i].name;
             LogLevel logLevel = ToLogLevel( logSources[i].logLevel );
-            AddRule( config, logName, logLevel, unityTarget );
+            AddRule( config, logName, logLevel, splitTarget );
         }
      
         LogManager.Configuration = config;
     }
- 
-    private void AddRule( LoggingConfiguration config, string logName, LogLevel level, UnityConsoleTarget target )
+
+    void OnDestroy()
     {
-        LoggingRule rule = new LoggingRule( logName, level, target );
+        LogManager.Configuration = null;
+    }
+
+    private void AddRule( LoggingConfiguration config, string logName, LogLevel level, Target splitTarget )
+    {
+        LoggingRule rule = new LoggingRule( logName, level, splitTarget );
         config.LoggingRules.Add( rule );
     }
  
@@ -97,4 +101,5 @@ public class Logging : MonoBehaviour
             return LogLevel.Off;
         }
     }
+}
 }
