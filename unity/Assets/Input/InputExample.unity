@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Name: 
   doubleTapTimeDelta: .200000003
   deadZone: .00999999978
-  inputReceivers: []
 --- !u!1 &175023392
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,11 +329,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &649633430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 649633431}
+  - 114: {fileID: 649633432}
+  - 114: {fileID: 649633433}
+  m_Layer: 0
+  m_Name: GlobalInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &649633431
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 649633430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2012496, y: .573012948, z: .890913665}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &649633432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 649633430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1614665895, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
+  m_Name: 
+  inputCamera: {fileID: 0}
+  cameraName: 
+  receiveAllInput: 1
+  ignoreAreas: []
+--- !u!114 &649633433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 649633430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b5ba37caa92471b89b613c2d5f55c6, type: 1}
+  m_Name: 
 --- !u!1 &1230601311
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-  m_PrefabInternal: {fileID: 1398010207}
+  m_PrefabInternal: {fileID: 0}
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 1230601312}
@@ -350,7 +402,7 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-  m_PrefabInternal: {fileID: 1398010207}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1230601311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -363,16 +415,17 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: b8a21a1e628d54565884a1b419f8a894,
     type: 2}
-  m_PrefabInternal: {fileID: 1398010207}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1230601311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -2032486868, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
+  m_Script: {fileID: 48786861, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
   m_Name: 
+  logTargets:
+  - UnityKit.UnityConsoleNLogTarget
+  - UnityKit.TestFlightNLogTarget
   logSources:
   - name: Input
-    logLevel: 1
-  - name: Camera
     logLevel: 1
 --- !u!1 &1263345414
 GameObject:
@@ -576,66 +629,6 @@ MonoBehaviour:
   cameraName: 
   receiveAllInput: 1
   ignoreAreas: []
---- !u!1001 &1398010207
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: logSources.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: logSources.Array.data[0].name
-      value: Input
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: logSources.Array.data[0].logLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: logSources.Array.data[1].name
-      value: Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-      propertyPath: logSources.Array.data[1].logLevel
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b8a21a1e628d54565884a1b419f8a894, type: 2}
-  m_RootGameObject: {fileID: 1230601311}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &1525071812
 GameObject:
   m_ObjectHideFlags: 0

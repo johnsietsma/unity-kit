@@ -59,6 +59,7 @@ public class DragSnapCamera : MonoBehaviour
     #region Input events
     void OnDoubleTap( InputEvent inputEvent )
     {
+        if( inputEvent.hit==null ) return;
         Transform hitTransform = inputEvent.hit.transform;
 
         Lock( hitTransform );

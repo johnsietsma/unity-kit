@@ -31,7 +31,9 @@ public class LogSource
 
 public class Logging : MonoBehaviour
 {
-    public string[] logTargets = new string[] {"UnityConsoleNLogTarget", "TestFlightNLogTarget" };
+    public string[] logTargets = new string[] {
+            "UnityKit.UnityConsoleNLogTarget",
+            "UnityKit.TestFlightNLogTarget" };
     public LogSource[] logSources;
  
     void Awake()
@@ -42,8 +44,7 @@ public class Logging : MonoBehaviour
         for( int i=0; i<logTargets.Length; i++ ) {
             Type t = Type.GetType( logTargets[i] );
             if( t == null ) {
-                Debug.LogError( "Could not get logger target of type " + logTargets[i] );
-                Debug.Log( "Test: " + config.FindTargetByName( "UnityConsole" ) );
+                Debug.LogWarning( "Could not get logger target of type " + logTargets[i] );
                 continue;
             }
             TargetWithLayout target = System.Activator.CreateInstance( t ) as TargetWithLayout;

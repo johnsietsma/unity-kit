@@ -14,7 +14,8 @@ public class InputManager : MonoBehaviour
 {
     public float doubleTapTimeDelta = 0.2f;
     public float deadZone = 0.01f;
-    public List<InputReceiver> inputReceivers = new List<InputReceiver>();
+
+    private List<InputReceiver> inputReceivers = new List<InputReceiver>();
     private enum TouchState
     {
         TapUp,
@@ -69,10 +70,10 @@ public class InputManager : MonoBehaviour
     {
         // Clear touch of tap is up for too long
         if( currTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
-            currTouch.Reset();
+            EndTouchInput( );
         }
 
-        Vector3 tapStart = TapStart();
+        Vector3 tapStart = TapStart( );
         if( tapStart == Vector3.zero )
             return;
 
@@ -80,6 +81,7 @@ public class InputManager : MonoBehaviour
         currTouch.pos = tapStart;
         currTouch.time = Time.time;
   
+        StartTouchInput( tapStart );
         SendTapDownMessage( MakeHitInputEvent() );
     }
 
@@ -170,7 +172,7 @@ public class InputManager : MonoBehaviour
 
     private void SendTapDownMessage( InputEvent inputEvent )
     {
-        DoSendMessage( "OnTapDown", inputEvent, true );
+        DoSendMessage( "OnTapDown", inputEvent );
     }
 
     private void SendTapUpMessage( InputEvent inputEvent )
@@ -188,20 +190,8 @@ public class InputManager : MonoBehaviour
         DoSendMessage( "OnDrag", inputEvent );
     }
 
-    private void DoSendMessage( string msgName, InputEvent inputEvent, bool inputStart=false )
+    private void DoSendMessage( string msgName, InputEvent inputEvent )
     {
-        if( inputStart ) {
-            IEnumerable<InputReceiver> validInputReceviers = inputReceivers.FindAll( ir => !ScreenPointInRects( inputEvent.pos, ir.ignoreAreas ) );
-            foreach( InputReceiver inputReceiver in validInputReceviers ) {
-                RaycastHit hit = Picker.Pick( inputReceiver.inputCamera, inputEvent.pos );
-                currTouch.hit = hit.transform;
-                if( hit.transform != null && FindChild( inputReceiver.transform, hit.transform ) ) {
-                    currTouch.receiver = inputReceiver.transform;
-                    log.Trace( "Start input chain. Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
-                    break;
-                }
-            }
-        }
         inputEvent.hit = currTouch.hit;
 
         if( currTouch.receiver != null ) {
@@ -242,6 +232,26 @@ public class InputManager : MonoBehaviour
             pos = currTouch.pos,
             time = currTouch.time,
         };
+    }
+
+    private void StartTouchInput( Vector3 pos )
+    {
+        IEnumerable<InputReceiver> validInputReceviers = inputReceivers.FindAll( ir => !ScreenPointInRects( pos, ir.ignoreAreas ) );
+        foreach( InputReceiver inputReceiver in validInputReceviers ) {
+            RaycastHit hit = Picker.Pick( inputReceiver.inputCamera, pos );
+            currTouch.hit = hit.transform;
+            if( hit.transform != null && FindChild( inputReceiver.transform, hit.transform ) ) {
+                currTouch.receiver = inputReceiver.transform;
+                log.Trace( "Start input chain. Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
+                break;
+            }
+        }
+    }
+
+    private void EndTouchInput()
+    {
+        log.Trace( "End input chain" );
+        currTouch.Reset();
     }
 
     private bool FindChild( Transform parentTransform, Transform targetTransform )
