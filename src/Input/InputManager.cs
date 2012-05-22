@@ -199,7 +199,7 @@ public class InputManager : MonoBehaviour
             currTouch.receiver.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
         }
 
-        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir => ir.receiveAllInput == true );
+        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir =>ir!=null && ir.receiveAllInput == true );
         globalReceivers.ForEach( ir => ir.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver ) );
     }
 
