@@ -10,7 +10,8 @@ public class TestFlightNLogTarget : TargetWithLayout
     protected override void Write( LogEventInfo logEvent )
     {
         string logMsg = this.Layout.Render( logEvent );
-        TestFlight.Log( logMsg );
+            // TODO: This isn't working and should be in the TestFlight project.
+        //TestFlight.Log( logMsg );
     }
 }
 }

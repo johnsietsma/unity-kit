@@ -38,6 +38,6 @@ public class NUnitRunner : MonoBehaviour
         TestPackage testPackage = new TestPackage( assemFile );
         RemoteTestRunner remoteTestRunner = new RemoteTestRunner();
         remoteTestRunner.Load( testPackage );
-        return remoteTestRunner.Run( l, TestFilter.Empty );
+        return remoteTestRunner.Run( l, TestFilter.Empty, false, LoggingThreshold.Debug );
     }
 }
