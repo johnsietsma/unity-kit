@@ -54,6 +54,9 @@
       <HintPath>..\deps\GoKit.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CSharpKit">
+      <HintPath>..\deps\CSharpKit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -79,16 +82,5 @@
     <Folder Include="VectorExtensions\" />
     <Folder Include="Camera\" />
     <Folder Include="Logging\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CSharpKit\CSharpKit.csproj">
-      <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
-      <Name>CSharpKit</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\TestFlightUnity\src\TestFlightUnity\TestFlightUnity.csproj">
-      <Project>{E0BC4562-CB36-4DD6-AEAF-A6DBB5B2BFD4}</Project>
-      <Name>TestFlightUnity</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
