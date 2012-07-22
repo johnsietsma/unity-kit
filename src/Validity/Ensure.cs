@@ -41,10 +41,30 @@ public static class Ensure
         return obj;
     }
 
-    public static GameObject Child( Transform transform, string name )
+    public static Transform Child( Transform transform, string name )
     {
         Transform child = transform.FindChild( name );
         Check.NotNull( child, "Child " + name + " of " + transform.name + " doesn't exist" );
+        return child;
+    }
+
+    public static GameObject Child( GameObject gameObject, string name )
+    {
+        Transform child = gameObject.transform.FindChild( name );
+        Check.NotNull( child, "Child " + name + " of " + gameObject.name + " doesn't exist" );
         return child.gameObject;
     }
+
+    public static Transform Parent( Transform transform, string parentName )
+    {
+        Transform t = transform;
+        while( t!=null ) {
+            if( t.name==parentName )
+                return t;
+            t = t.parent;
+        }
+        Check.Error( "Parent " + parentName + " of " + transform.name + " doesn't exist" );
+        return null;;
+    }
+
 }

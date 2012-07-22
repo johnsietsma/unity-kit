@@ -131,7 +131,7 @@ public class DragSnapCamera : MonoBehaviour
     {
         // Lock target has moved
         if( !currLockTarget.position.Approx( currLockPosition ) ) {
-            print( "Target moved - target:" + currLockTarget.position.ToStringf() + " curr pos:" + currLockPosition.ToStringf() );
+            //print( "Target moved - target:" + currLockTarget.position.ToStringf() + " curr pos:" + currLockPosition.ToStringf() );
             Lock( currLockTarget );
         }
 

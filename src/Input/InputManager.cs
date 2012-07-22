@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public float deadZone = 0.01f;
 
     private List<InputReceiver> inputReceivers = new List<InputReceiver>();
+
     private enum TouchState
     {
         TapUp,
@@ -242,7 +243,7 @@ public class InputManager : MonoBehaviour
             currTouch.hit = hit.transform;
             if( hit.transform != null && FindChild( inputReceiver.transform, hit.transform ) ) {
                 currTouch.receiver = inputReceiver.transform;
-                log.Trace( "Start input chain. Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
+                log.Trace( "Start input chain. Pos: " + pos + " Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
                 break;
             }
         }
@@ -262,7 +263,7 @@ public class InputManager : MonoBehaviour
         foreach( Transform childTransform in parentTransform ) {
             if( childTransform == targetTransform )
                 return true;
-            if( FindChild( childTransform, childTransform ) ) {
+            if( FindChild( childTransform, targetTransform ) ) {
                 return true;
             }
         }
