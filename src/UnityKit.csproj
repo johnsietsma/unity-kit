@@ -36,14 +36,15 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp bin/Release/UnityKit.dll ../unity/Assets/Plugins/" workingdir="${ProjectDir}" />
+        <Command type="AfterBuild" command="cp bin/Release/UnityKit.dll ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\deps\NLog.dll</HintPath>
@@ -52,6 +53,9 @@
     <Reference Include="GoKit">
       <HintPath>..\deps\GoKit.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="CSharpKit">
+      <HintPath>..\deps\CSharpKit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,8 +73,6 @@
     <Compile Include="Logging\UnityConsoleTraceListener.cs" />
     <Compile Include="Logging\UnityConsoleNlogTarget.cs" />
     <Compile Include="Logging\TestFlightNLogTarget.cs" />
-    <Compile Include="VectorExtensions\TransformExtensions.cs" />
-    <Compile Include="VectorExtensions\GameObjectExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -80,12 +82,5 @@
     <Folder Include="VectorExtensions\" />
     <Folder Include="Camera\" />
     <Folder Include="Logging\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\csharp-kit\CSharpKit.csproj">
-      <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
-      <Name>CSharpKit</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
 </Project>
