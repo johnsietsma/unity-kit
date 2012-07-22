@@ -200,7 +200,7 @@ public class InputManager : MonoBehaviour
             currTouch.receiver.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
         }
 
-        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir =>ir!=null && ir.receiveAllInput == true );
+        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir =>ir!=null && ir.receiveAllInput == true && ir.inputCamera==currTouch.cam );
         globalReceivers.ForEach( ir => ir.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver ) );
     }
 
@@ -243,6 +243,7 @@ public class InputManager : MonoBehaviour
             currTouch.hit = hit.transform;
             if( hit.transform != null && FindChild( inputReceiver.transform, hit.transform ) ) {
                 currTouch.receiver = inputReceiver.transform;
+                currTouch.cam = inputReceiver.inputCamera;
                 log.Trace( "Start input chain. Pos: " + pos + " Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
                 break;
             }
@@ -282,6 +283,7 @@ public class InputManager : MonoBehaviour
         public float time;
         public Transform hit;
         public Transform receiver;
+        public Camera cam;
 
         public void Reset()
         {
@@ -289,6 +291,7 @@ public class InputManager : MonoBehaviour
             time = 0;
             hit = null;
             receiver = null;
+            cam = null;
         }
 
         public override string ToString()
