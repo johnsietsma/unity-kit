@@ -1,7 +1,6 @@
 using System;
 using NUnit.Core;
 using UnityEngine;
-using NLog;
 
 public class ConsoleListener : EventListener
 {

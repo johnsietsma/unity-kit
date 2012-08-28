@@ -44,17 +44,16 @@
       <HintPath>..\..\deps\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\..\deps\NLog.dll</HintPath>
+      <HintPath>..\..\NLog.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="UnitTesting\NUnit\ConsoleListener.cs" />
     <Compile Include="UnitTesting\NUnit\NUnitRunner.cs" />
+    <Compile Include="UnityEditorKit_AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
