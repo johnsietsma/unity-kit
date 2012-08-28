@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityKit", "UnityKit.csproj", "{12CC3311-939E-4155-A4F7-15BB9691A254}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEditorKit", "UnityEditorKit\UnityEditorKit.csproj", "{D471C2FD-1B08-4971-8100-AC01DD65178E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEditorKit", "UnityEditorKit.csproj", "{D471C2FD-1B08-4971-8100-AC01DD65178E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpKit", "..\..\csharp-kit\CSharpKit.csproj", "{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}"
 EndProject
