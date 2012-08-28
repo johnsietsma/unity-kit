@@ -61,8 +61,6 @@
     <Compile Include="Input\InputReceiver.cs" />
     <Compile Include="Validity\Ensure.cs" />
     <Compile Include="Scene\Find.cs" />
-    <Compile Include="VectorExtensions\Vector2Extensions.cs" />
-    <Compile Include="VectorExtensions\Vector3Extensions.cs" />
     <Compile Include="Input\InputEvent.cs" />
     <Compile Include="Camera\DragSnapCamera.cs" />
     <Compile Include="Input\Picker.cs" />
@@ -70,17 +68,19 @@
     <Compile Include="Logging\UnityConsoleTraceListener.cs" />
     <Compile Include="Logging\UnityConsoleNlogTarget.cs" />
     <Compile Include="Logging\TestFlightNLogTarget.cs" />
-    <Compile Include="VectorExtensions\GameObjectExtensions.cs" />
-    <Compile Include="VectorExtensions\TransformExtensions.cs" />
+    <Compile Include="Extensions\Vector2Extensions.cs" />
+    <Compile Include="Extensions\Vector3Extensions.cs" />
+    <Compile Include="Extensions\GameObjectExtensions.cs" />
+    <Compile Include="Extensions\TransformExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Input\" />
     <Folder Include="Scene\" />
     <Folder Include="Validity\" />
-    <Folder Include="VectorExtensions\" />
     <Folder Include="Camera\" />
     <Folder Include="Logging\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\csharp-kit\CSharpKit.csproj">

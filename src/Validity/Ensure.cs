@@ -23,6 +23,15 @@ public static class Ensure
         return t;
     }
 
+    public static T HasComponent<T>( GameObject go ) where T : Component
+    {
+        T t = Find.Component<T>( go );
+        if( t==null ) {
+            t = go.AddComponent<T>();
+        }
+        return t;
+    }
+
     public static T Instantiate<T>( T prefab ) where T : Object
     {
         return Instantiate<T>( prefab, Vector3.zero, Quaternion.identity );
@@ -43,16 +52,14 @@ public static class Ensure
 
     public static Transform Child( Transform transform, string name )
     {
-        Transform child = transform.FindChild( name );
-        Check.NotNull( child, "Child " + name + " of " + transform.name + " doesn't exist" );
+        Transform child = transform.Find( name );
+        Check.NotNull( child, "Child \"" + name + "\" of " + transform.name + " doesn't exist" );
         return child;
     }
 
     public static GameObject Child( GameObject gameObject, string name )
     {
-        Transform child = gameObject.transform.FindChild( name );
-        Check.NotNull( child, "Child " + name + " of " + gameObject.name + " doesn't exist" );
-        return child.gameObject;
+        return Child( gameObject.transform, name ).gameObject;
     }
 
     public static Transform Parent( Transform transform, string parentName )
