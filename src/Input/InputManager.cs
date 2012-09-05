@@ -31,6 +31,7 @@ public class InputManager : MonoBehaviour
 
     public void AddInputReceiver( InputReceiver inputReceiver )
     {
+        log.Trace( "Adding input receiver: " + inputReceiver.name + " with cam " + inputReceiver.inputCamera );
         inputReceivers.Add( inputReceiver );
         inputReceivers.Sort( CompareInputReceivers );
     }
@@ -193,6 +194,7 @@ public class InputManager : MonoBehaviour
 
     private void DoSendMessage( string msgName, InputEvent inputEvent )
     {
+        log.Trace( "Attempting to send message: " + msgName + " cam: " + currTouch.cam );
         inputEvent.hit = currTouch.hit;
 
         if( currTouch.receiver != null ) {
@@ -200,8 +202,11 @@ public class InputManager : MonoBehaviour
             currTouch.receiver.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
         }
 
-        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir =>ir!=null && ir.receiveAllInput == true && ir.inputCamera==currTouch.cam );
-        globalReceivers.ForEach( ir => ir.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver ) );
+        IEnumerable<InputReceiver> globalReceivers = inputReceivers.FindAll( ir => ir != null && ir.receiveAllInput == true );
+        globalReceivers.ForEach( ir => {
+            log.Trace( "Sending message " + msgName + " to " + ir.name );
+            ir.SendMessage( msgName, inputEvent, SendMessageOptions.DontRequireReceiver );
+        } );
     }
 
     private bool ScreenPointInRects( Vector3 point3, Rect[] rects )
@@ -238,16 +243,18 @@ public class InputManager : MonoBehaviour
     private void StartTouchInput( Vector3 pos )
     {
         IEnumerable<InputReceiver> validInputReceviers = inputReceivers.FindAll( ir => !ScreenPointInRects( pos, ir.ignoreAreas ) );
+        log.Trace( "Hit test start touch against " + validInputReceviers.Count().ToString() + " receivers." );
         foreach( InputReceiver inputReceiver in validInputReceviers ) {
             RaycastHit hit = Picker.Pick( inputReceiver.inputCamera, pos );
             currTouch.hit = hit.transform;
             if( hit.transform != null && FindChild( inputReceiver.transform, hit.transform ) ) {
-                currTouch.receiver = inputReceiver.transform;
                 currTouch.cam = inputReceiver.inputCamera;
+                currTouch.receiver = inputReceiver.transform;
                 log.Trace( "Start input chain. Pos: " + pos + " Hit: " + currTouch.hit + " receiver: " + currTouch.receiver );
-                break;
+                return;
             }
         }
+        log.Trace( "Didn't find any hit targets." );
     }
 
     private void EndTouchInput()
