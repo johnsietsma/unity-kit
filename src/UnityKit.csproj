@@ -86,7 +86,6 @@
     <ProjectReference Include="..\..\csharp-kit\CSharpKit.csproj">
       <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
       <Name>CSharpKit</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
 </Project>

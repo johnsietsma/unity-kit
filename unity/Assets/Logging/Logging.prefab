@@ -28,7 +28,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!1002 &400001
@@ -42,9 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -2032486868, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
+  m_Script: {fileID: 48786861, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
   m_Name: 
-  logSources: []
+  logTargets:
+  - UnityKit.UnityConsoleNLogTarget
+  - UnityKit.TestFlightNLogTarget
+  logSources:
+  - name: Camera
+    logLevel: 1
 --- !u!1002 &11400001
 EditorExtensionImpl:
   serializedVersion: 6

@@ -101,7 +101,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .808941603, y: .0165806022, z: -.398067713}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &13781690
@@ -166,7 +165,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.0325704217, y: .211329073, z: .019813478}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!114 &17411554
@@ -182,7 +180,6 @@ MonoBehaviour:
   m_Name: 
   doubleTapTimeDelta: .200000003
   deadZone: .00999999978
-  inputReceivers: []
 --- !u!1 &175023392
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +208,6 @@ Transform:
   m_LocalRotation: {x: .353553504, y: .353553414, z: -.14644669, w: .853553295}
   m_LocalPosition: {x: .195131749, y: 1.48858488, z: -.0756516457}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 45.0000153, y: 45, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!20 &175023394
@@ -290,7 +286,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.722564042, y: .0165806022, z: -.0967180878}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &529041603
@@ -355,7 +350,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!114 &1230601313
@@ -367,8 +361,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1230601311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -2032486868, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
+  m_Script: {fileID: 48786861, guid: 6812190874ead4c6aa7461e3525188b3, type: 1}
   m_Name: 
+  logTargets:
+  - UnityKit.UnityConsoleNLogTarget
+  - UnityKit.TestFlightNLogTarget
   logSources:
   - name: Input
     logLevel: 1
@@ -401,7 +398,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.02562237, y: .0165806022, z: -4.2213788}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &1263345416
@@ -468,7 +464,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.68070316, y: .0165806022, z: -4.07379198}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &1281280529
@@ -535,7 +530,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!114 &1394757759
@@ -663,7 +657,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.722564042, y: .0165806022, z: -.0967180878}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &1525071814
@@ -729,7 +722,6 @@ Transform:
   m_LocalRotation: {x: .408217937, y: -.234569728, z: .109381676, w: .875426054}
   m_LocalPosition: {x: -.722564042, y: .0165806022, z: -.0967180878}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!108 &1575255855
@@ -794,7 +786,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.69903541, y: .0165806022, z: 4.58300352}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &1900730600
