@@ -13,7 +13,8 @@ public class InputReceiver : MonoBehaviour
 
     private InputManager inputManager;
 
-    void Awake()
+    // Add ourselves to the input manager, do this in Start to give InputManager to do stuff in Awake.
+    void Start()
     {
         if( inputCamera == null ) {
             if( !string.IsNullOrEmpty( cameraName ) ) {

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameObjectExtensions
@@ -8,6 +10,10 @@ public static class GameObjectExtensions
 
     public static T EnsureComponent<T>( this GameObject go ) where T:Component {
         return Ensure.Component<T>( go );
+    }
+
+    public static IEnumerable<GameObject> Descendants( this GameObject go ) {
+        return GameObjectHelpers.Descendants( go );
     }
 }
 

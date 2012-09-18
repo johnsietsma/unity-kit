@@ -12,14 +12,14 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp ${TargetFile} ../unity/Assets/Plugins/" workingdir="${ProjectDir}" />
@@ -29,11 +29,11 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp bin/Release/UnityKit.dll ../unity/Assets/Plugins/" workingdir="${SolutionDir}" />
@@ -72,6 +72,8 @@
     <Compile Include="Extensions\GameObjectExtensions.cs" />
     <Compile Include="Extensions\TransformExtensions.cs" />
     <Compile Include="UnityEditorKit_AssemblyInfo.cs" />
+    <Compile Include="GameObject\GameObjectHelpers.cs" />
+    <Compile Include="Maths\Pose.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -81,6 +83,8 @@
     <Folder Include="Camera\" />
     <Folder Include="Logging\" />
     <Folder Include="Extensions\" />
+    <Folder Include="GameObject\" />
+    <Folder Include="Maths\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\csharp-kit\CSharpKit.csproj">
