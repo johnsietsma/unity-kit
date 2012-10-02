@@ -12,6 +12,10 @@ public static class GameObjectExtensions
         return Ensure.Component<T>( go );
     }
 
+    public static bool HasComponent<T>( this GameObject go ) where T:Component {
+        return go.GetComponent<T>()!=null;
+    }
+
     public static IEnumerable<GameObject> Descendants( this GameObject go ) {
         return GameObjectHelpers.Descendants( go );
     }
