@@ -74,6 +74,7 @@
     <Compile Include="UnityEditorKit_AssemblyInfo.cs" />
     <Compile Include="GameObject\GameObjectHelpers.cs" />
     <Compile Include="Maths\Pose.cs" />
+    <Compile Include="Extensions\AnimationExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
