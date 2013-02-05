@@ -71,20 +71,40 @@ public class DragSnapCamera : MonoBehaviour
             state = State.Drifting;
         }
     }
+    
+	Vector2 dragStartPos;
+    Vector3 dragStartCameraPos;
 
-    void OnDrag( InputEvent inputEvent )
-    {
-        if( state != State.Drifting ) {
-            state = State.Dragging;
-            if( cameraTween != null )
-                cameraTween.pause();
-        }
+    void OnDrag (InputEvent inputEvent)
+	{
+		if( state != State.Dragging ) {
+			state = State.Dragging;
+			
+			dragStartPos = inputEvent.pos;
+			dragStartCameraPos = dragSnapCamera.transform.position;
+			
+			log.Trace( "DRAG START!" );
+			
+			if( cameraTween != null )
+				cameraTween.pause ();
+		}
+		
+		Vector3 startPos = ScreenPointToGroundPlanePoint( dragStartPos );
+		Vector3 newPos = ScreenPointToGroundPlanePoint( inputEvent.pos );
+		Vector3 offset = startPos - newPos;
+		dragSnapCamera.transform.position = dragStartCameraPos + offset;
+		
+		/* old frame by frame solution
+		
         Vector3 deltaPos = ScreenPointToGroundPlanePoint( inputEvent.pos ) - ScreenPointToGroundPlanePoint( inputEvent.lastPos );
+        deltaPos = dragSnapCamera.projectionMatrix.inverse * deltaPos;
         deltaPos = -deltaPos.xz().AddY( 0 );
         speed = speed.LowPassFilter( deltaPos / Time.deltaTime, speedSmoothingFactor );
         speed.y = 0;
         log.Trace( "Drag by " + deltaPos );
         dragSnapCamera.transform.Translate( deltaPos, Space.World );
+        
+        */
     }
     #endregion
 

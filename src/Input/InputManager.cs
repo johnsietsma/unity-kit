@@ -59,13 +59,11 @@ public class InputManager : MonoBehaviour
     {
         if( touchState == TouchState.TapUp ) {
             UpdateUpState();
+        } else if( touchState == TouchState.TapDown ) {
+            UpdateDownState();
+        } else if( touchState == TouchState.Dragging ) {
+            UpdateDragState();
         }
-        else if( touchState == TouchState.TapDown ) {
-                UpdateDownState();
-            }
-            else if( touchState == TouchState.Dragging ) {
-                    UpdateDragState();
-                }
     }
 
     private void UpdateUpState()
@@ -122,10 +120,10 @@ public class InputManager : MonoBehaviour
             return;
         }
         else if( (tapDown - currTouch.pos).magnitude > deadZone ) {
-                currTouch.pos = tapDown;
-                SendDragMessage( MakeInputEvent() );  // No raycast for drag
-                lastTouch = currTouch;
-            }
+            currTouch.pos = tapDown;
+            SendDragMessage( MakeInputEvent() );  // No raycast for drag
+            lastTouch = currTouch;
+        }
 
     }
     #endregion
@@ -154,8 +152,9 @@ public class InputManager : MonoBehaviour
         }
 
         if( Input.touchCount > 0 ) {
-            if( Input.touches[0].phase == TouchPhase.Moved || Input.touches[0].phase == TouchPhase.Stationary )
-                return Input.touches[0].position;
+            if( Input.touches[0].phase == TouchPhase.Moved ||
+                Input.touches[0].phase == TouchPhase.Stationary )
+            	return Input.touches[0].position;
         }
         return Vector3.zero;
     }

@@ -42,10 +42,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\deps\NLog.dll</HintPath>
       <Private>False</Private>
@@ -53,6 +49,9 @@
     <Reference Include="GoKit">
       <HintPath>..\deps\GoKit.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>bin\Debug\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +87,7 @@
     <Folder Include="Maths\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\csharp-kit\CSharpKit.csproj">
+    <ProjectReference Include="..\..\armello-engine\deps\csharp-kit\CSharpKit.csproj">
       <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
       <Name>CSharpKit</Name>
     </ProjectReference>
