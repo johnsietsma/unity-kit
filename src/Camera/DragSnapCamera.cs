@@ -11,7 +11,7 @@ public class DragSnapCamera : MonoBehaviour
     #region Fields
     public Camera dragSnapCamera; // The camera to move, defaults to main.
     public float tweenTime = 1;
-    public float speedSmoothingFactor = 0.9f;
+    public float velocitySmoothingFactor = 0.9f;
     public float frictionFactor = 0.75f;
     private float cameraHeight;
     private Plane groundPlane; // This is used to find the world distance from screen space
@@ -26,7 +26,7 @@ public class DragSnapCamera : MonoBehaviour
         Tweening
     };
     private State state = State.None;
-    private Vector3 speed = Vector3.zero;
+    private Vector3 velocity = Vector3.zero;
     private Transform currLockTarget; // The transform we are locked to
     private Vector3 currLockPosition; // The last known pos of the lock target
     private Tween cameraTween;
@@ -69,6 +69,7 @@ public class DragSnapCamera : MonoBehaviour
     {
         if( state == State.Dragging ) {
             state = State.Drifting;
+            velocity = dragSnapCamera.velocity;
         }
     }
     
@@ -93,18 +94,6 @@ public class DragSnapCamera : MonoBehaviour
 		Vector3 newPos = ScreenPointToGroundPlanePoint( inputEvent.pos );
 		Vector3 offset = startPos - newPos;
 		dragSnapCamera.transform.position = dragStartCameraPos + offset;
-		
-		/* old frame by frame solution
-		
-        Vector3 deltaPos = ScreenPointToGroundPlanePoint( inputEvent.pos ) - ScreenPointToGroundPlanePoint( inputEvent.lastPos );
-        deltaPos = dragSnapCamera.projectionMatrix.inverse * deltaPos;
-        deltaPos = -deltaPos.xz().AddY( 0 );
-        speed = speed.LowPassFilter( deltaPos / Time.deltaTime, speedSmoothingFactor );
-        speed.y = 0;
-        log.Trace( "Drag by " + deltaPos );
-        dragSnapCamera.transform.Translate( deltaPos, Space.World );
-        
-        */
     }
     #endregion
 
@@ -159,8 +148,8 @@ public class DragSnapCamera : MonoBehaviour
 
     private void UpdateDrift()
     {
-        speed *= frictionFactor;
-        dragSnapCamera.transform.Translate( speed * Time.deltaTime, Space.World );
+        velocity *= frictionFactor;
+        dragSnapCamera.transform.Translate( velocity * Time.deltaTime, Space.World );
     }
     #endregion
 
