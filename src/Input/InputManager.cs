@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
     {
         TapUp,
         Dragging,
+        Pinching,
         TapDown
     };
 
@@ -56,75 +57,79 @@ public class InputManager : MonoBehaviour
     }
 
     void Update()
-    {
-        if( touchState == TouchState.TapUp ) {
-            UpdateUpState();
-        } else if( touchState == TouchState.TapDown ) {
-            UpdateDownState();
-        } else if( touchState == TouchState.Dragging ) {
-            UpdateDragState();
-        }
+	{
+		if( touchState == TouchState.TapUp ) {
+			UpdateUpState();
+		} else if( touchState == TouchState.TapDown ) {
+			UpdateDownState();
+		} else if( touchState == TouchState.Dragging ) {
+			UpdateDragState();
+		} else if( touchState == TouchState.Pinching ) {
+			UpdatePinchState();
+		}
     }
 
     private void UpdateUpState()
-    {
-        // Clear touch of tap is up for too long
-        if( currTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
-            EndTouchInput( );
+	{
+		// Clear touch of tap is up for too long
+		if( currTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
+			EndTouchInput();
         }
 
-        Vector3 tapStart = TapStart( );
-        if( tapStart == Vector3.zero )
-            return;
-
-        touchState = TouchState.TapDown;
-        currTouch.pos = tapStart;
-        currTouch.time = Time.time;
-  
-        StartTouchInput( tapStart );
-        SendTapDownMessage( MakeHitInputEvent() );
+        Vector2 tapStart;
+        if( TapStart( out tapStart ) ) {
+	        touchState = TouchState.TapDown;
+	        currTouch.pos = tapStart;
+	        currTouch.time = Time.time;
+	  
+	        StartTouchInput( tapStart );
+	        SendTapDownMessage( MakeHitInputEvent() );
+        }
     }
 
     private void UpdateDownState()
     {
-        Vector3 tapDown = TapDown();
+        Vector2 tapDown;
+		bool isDown = TapDown( out tapDown );
         currTouch.time = Time.time;
-        if( tapDown != Vector3.zero && (tapDown - currTouch.pos).magnitude > deadZone ) {
-            touchState = TouchState.Dragging;
-            lastTouch = currTouch;
-        }
-        else if( tapDown == Vector3.zero ) {
-                // tap up
-                if( lastTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
-                    SendDoubleTapMessage( MakeHitInputEvent() );
-                }
-                else {
-                    SendSingleTapMessage( MakeHitInputEvent() );
-                }
-                SendTapUpMessage( MakeHitInputEvent() );
-                lastTouch = currTouch;
-
-                touchState = TouchState.TapUp;
-                currTouch.pos = Vector3.zero;
-                SendTapMessage( MakeInputEvent() );
+        if( isDown ) {
+        	if ( ( tapDown - currTouch.pos ).magnitude > deadZone ) {
+		        touchState = TouchState.Dragging;
+		        lastTouch = currTouch;
             }
-    }
+        } else {
+            // tap up
+            if( lastTouch.time != 0 && currTouch.time - lastTouch.time < doubleTapTimeDelta ) {
+                SendDoubleTapMessage( MakeHitInputEvent() );
+            } else {
+                SendSingleTapMessage( MakeHitInputEvent() );
+            }
+            SendTapUpMessage( MakeHitInputEvent() );
+            lastTouch = currTouch;
+
+            touchState = TouchState.TapUp;
+            currTouch.pos = Vector3.zero;
+            SendTapMessage( MakeInputEvent() );
+        }
+	}
 
     private void UpdateDragState()
     {
-        Vector3 tapDown = TapDown();
-        if( tapDown == Vector3.zero ) {
-            touchState = TouchState.TapUp;
-            SendTapUpMessage( MakeHitInputEvent() );
-            lastTouch = currTouch;
-            return;
-        }
-        else if( (tapDown - currTouch.pos).magnitude > deadZone ) {
+        Vector2 tapDown;
+        if( TapDown( out tapDown ) == false ) {
+			touchState = TouchState.TapUp;
+			SendTapUpMessage( MakeHitInputEvent() );
+			lastTouch = currTouch;
+        } else if( (tapDown - currTouch.pos).magnitude > deadZone ) {
             currTouch.pos = tapDown;
             SendDragMessage( MakeInputEvent() );  // No raycast for drag
             lastTouch = currTouch;
         }
-
+    }
+    
+    private void UpdatePinchState()
+    {
+    	
     }
     #endregion
 
@@ -134,29 +139,33 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region Input helpers
-    private Vector3 TapStart()
+    private bool TapStart( out Vector2 position )
     {
         if( Input.GetMouseButtonDown( 0 ) ) {
-            return Input.mousePosition;
+            position = Input.mousePosition;
+            return true;
         }
         if( Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began ) {
-            return Input.touches[0].position;
+            position = Input.touches[0].position;
+            return true;
         }
-        return Vector3.zero;
+        return false;
     }
 
-    private Vector3 TapDown()
+    private bool TapDown( out Vector2 position )
     {
         if( Input.GetMouseButton( 0 ) ) {
-            return Input.mousePosition;
+            position = Input.mousePosition;
+            return true;
         }
 
         if( Input.touchCount > 0 ) {
             if( Input.touches[0].phase == TouchPhase.Moved ||
                 Input.touches[0].phase == TouchPhase.Stationary )
-            	return Input.touches[0].position;
+            	position = Input.touches[0].position;
+            	return true;
         }
-        return Vector3.zero;
+        return false;
     }
     #endregion
 
@@ -285,7 +294,7 @@ public class InputManager : MonoBehaviour
 
     private struct InputInfo
     {
-        public Vector3 pos;
+        public Vector2 pos;
         public float time;
         public Transform hit;
         public Transform receiver;
@@ -293,7 +302,7 @@ public class InputManager : MonoBehaviour
 
         public void Reset()
         {
-            pos = Vector3.zero;
+            pos = Vector2.zero;
             time = 0;
             hit = null;
             receiver = null;
