@@ -51,8 +51,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\deps\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
