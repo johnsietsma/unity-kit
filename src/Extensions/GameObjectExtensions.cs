@@ -19,5 +19,9 @@ public static class GameObjectExtensions
     public static IEnumerable<GameObject> Descendants( this GameObject go ) {
         return GameObjectHelpers.Descendants( go );
     }
+
+    public static IEnumerable<GameObject> Parents( this GameObject go ) {
+        return GameObjectHelpers.Parents( go );
+    }
 }
 

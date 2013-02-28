@@ -13,5 +13,12 @@ public static class GameObjectHelpers
             yield return childTransform.gameObject;
         }
     }
+
+    public static IEnumerable<GameObject> Parents( GameObject go ) {
+        while( go.transform.parent!=null ) {
+            yield return go.transform.parent.gameObject;
+            go = go.transform.parent.gameObject;
+        }
+    }
 }
 

@@ -51,7 +51,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>bin\Debug\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +88,7 @@
     <Folder Include="Maths\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\armello-engine\deps\csharp-kit\CSharpKit.csproj">
+    <ProjectReference Include="..\..\csharp-kit\CSharpKit.csproj">
       <Project>{0BA8F7FA-A47A-48FE-8E0C-C9ADD1FA11A6}</Project>
       <Name>CSharpKit</Name>
     </ProjectReference>
