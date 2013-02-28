@@ -40,6 +40,12 @@ public static class Vector3Extensions
 
     }
     
+    public static Vector3 WithElement( this Vector3 v, int index, float value )
+    {
+    	v[ index ] = value;
+    	return v;
+    }
+    
 	public static Vector3 WithX( this Vector3 v, float x )
 	{
 		return new Vector3( x, v.y, v.z );
