@@ -21,5 +21,4 @@ public static class Vector2Extensions
     {
         return v.ToString( "0.0,0.0" );
     }
-
 }

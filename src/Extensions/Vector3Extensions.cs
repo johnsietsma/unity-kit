@@ -37,7 +37,45 @@ public static class Vector3Extensions
     public static Vector2 yz( this Vector3 v )
     {
         return new Vector2( v.y, v.z );
+
     }
+    
+    public static Vector3 WithElement( this Vector3 v, int index, float value )
+    {
+    	v[ index ] = value;
+    	return v;
+    }
+    
+	public static Vector3 WithX( this Vector3 v, float x )
+	{
+		return new Vector3( x, v.y, v.z );
+	}
+	
+	public static Vector3 WithY( this Vector3 v, float y )
+	{
+		return new Vector3( v.x, y, v.z );
+	}
+	
+	public static Vector3 WithZ( this Vector3 v, float z )
+	{
+		return new Vector3( v.x, v.y, z );
+	}
+	
+	public static Vector3 WithXY( this Vector3 v, float x, float y )
+	{
+		return new Vector3( x, y, v.z );
+	}
+	
+	public static Vector3 WithXZ( this Vector3 v, float x, float z )
+	{
+		return new Vector3( x, v.y, z );
+	}
+	
+	public static Vector3 WithYZ( this Vector3 v, float y, float z )
+	{
+		return new Vector3( v.x, y, z );
+	}
+	
  
     public static Vector3 ToGround( this Vector3 v )
     {
