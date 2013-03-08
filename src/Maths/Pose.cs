@@ -8,8 +8,8 @@ public class Pose
     public static readonly Pose zero = new Pose( Vector3.zero, Quaternion.identity, Vector3.zero );
     
     public Vector3 position;
-    public Quaternion rotation;
-    public Vector3 scale;
+    public Quaternion rotation = Quaternion.identity;
+    public Vector3 scale = Vector3.one;
     
     public Pose( Vector3 position, Quaternion rotation, Vector3 scale )
     {
