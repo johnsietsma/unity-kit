@@ -1,6 +1,7 @@
 *.pidb
 *.userprefs
 .DS_Store
+*.sublime-workspace
 unity/Library/
 unity/Temp/
 iOS/
