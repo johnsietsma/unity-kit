@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="NLog">
+    <Reference Include="NLog2">
       <HintPath>..\deps\NLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -69,7 +69,6 @@
     <Compile Include="Extensions\Vector3Extensions.cs" />
     <Compile Include="Extensions\GameObjectExtensions.cs" />
     <Compile Include="Extensions\TransformExtensions.cs" />
-    <Compile Include="UnityEditorKit_AssemblyInfo.cs" />
     <Compile Include="GameObject\GameObjectHelpers.cs" />
     <Compile Include="Maths\Pose.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />

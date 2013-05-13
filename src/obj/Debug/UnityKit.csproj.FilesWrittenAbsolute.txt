@@ -1,0 +1,4 @@
+/Users/johnsietsma/src/armello/deps/unity-kit/src/bin/Debug/UnityKit.dll.mdb
+/Users/johnsietsma/src/armello/deps/unity-kit/src/bin/Debug/UnityKit.dll
+/Users/johnsietsma/src/armello/deps/unity-kit/src/obj/Debug/UnityKit.dll
+/Users/johnsietsma/src/armello/deps/unity-kit/src/obj/Debug/UnityKit.dll.mdb

@@ -31,23 +31,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEditor">
-      <HintPath>..\deps\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor" Condition="'$(OS)' != 'Windows_NT'">
+      <HintPath>Applications\Unity\MonoDevelop.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\deps\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine" Condition="'$(OS)' != 'Windows_NT'">
+      <HintPath>Applications\Unity\MonoDevelop.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>bin\Debug\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>bin\Debug\nunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>bin\Debug\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.core.interfaces">
-      <HintPath>bin\Debug\nunit.core.interfaces.dll</HintPath>
+      <HintPath>../deps/NLog.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
