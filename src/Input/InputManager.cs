@@ -149,6 +149,7 @@ public class InputManager : MonoBehaviour
             position = Input.touches[0].position;
             return true;
         }
+        position = Vector2.zero;
         return false;
     }
 
@@ -159,12 +160,13 @@ public class InputManager : MonoBehaviour
             return true;
         }
 
-        if( Input.touchCount > 0 ) {
-            if( Input.touches[0].phase == TouchPhase.Moved ||
-                Input.touches[0].phase == TouchPhase.Stationary )
-            	position = Input.touches[0].position;
-            	return true;
+        if( Input.touchCount > 0 && (
+                Input.touches[0].phase == TouchPhase.Moved ||
+                Input.touches[0].phase == TouchPhase.Stationary ) ) {
+        	position = Input.touches[0].position;
+        	return true;
         }
+        position = Vector2.zero;
         return false;
     }
     #endregion

@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="NLog2">
+    <Reference Include="NLog">
       <HintPath>..\deps\NLog.dll</HintPath>
       <Private>False</Private>
     </Reference>

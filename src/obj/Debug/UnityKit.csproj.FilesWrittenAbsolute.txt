@@ -2,3 +2,11 @@
 /Users/johnsietsma/src/armello/deps/unity-kit/src/bin/Debug/UnityKit.dll
 /Users/johnsietsma/src/armello/deps/unity-kit/src/obj/Debug/UnityKit.dll
 /Users/johnsietsma/src/armello/deps/unity-kit/src/obj/Debug/UnityKit.dll.mdb
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\bin\Debug\UnityEngine.dll
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\bin\Debug\CSharpKit.dll
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\bin\Debug\CSharpKit.dll.mdb
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\bin\Debug\nunit.framework.dll
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\bin\Debug\UnityKit.dll.mdb
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\bin\Debug\UnityKit.dll
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\obj\Debug\UnityKit.dll
+D:\Projects\Armello\project\armello-engine\deps\unity-kit\src\obj\Debug\UnityKit.dll.mdb

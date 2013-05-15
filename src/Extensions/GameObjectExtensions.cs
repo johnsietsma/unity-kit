@@ -28,7 +28,7 @@ public static class GameObjectExtensions
     }
 
     public static IEnumerable<GameObject> Parents( this GameObject go ) {
-        return GameObjectHelpers.Parents( go );
+        return go.transform.Parents().Select( t => t.gameObject );
     }
 
     public static void SetChildrenActive( this GameObject go, bool active ) {
