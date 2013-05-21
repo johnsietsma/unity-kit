@@ -1,11 +1,18 @@
-*.pidb
-*.userprefs
+# MacOS
 .DS_Store
+
+# Sublime
 *.sublime-workspace
+
+# Unity
 Library/
 !**/Library/*.asset
 Temp/
+*.userprefs
+*.pidb
 *.sln
 *.csproj
+*.unityproj
+
+# Build folder
 iOS/
-bin/
