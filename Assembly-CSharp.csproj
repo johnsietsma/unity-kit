@@ -44,31 +44,31 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Attributes\ExposeEnumerableAttribute.cs" />
-     <Compile Include="Assets\ExposeEnumerable\TestExposeEnumerable.cs" />
-     <Compile Include="Assets\Extensions\AnimationExtensions.cs" />
-     <Compile Include="Assets\Extensions\GameObjectExtensions.cs" />
-     <Compile Include="Assets\Extensions\TransformExtensions.cs" />
-     <Compile Include="Assets\Extensions\Vector2Extensions.cs" />
-     <Compile Include="Assets\Extensions\Vector3Extensions.cs" />
-     <Compile Include="Assets\GameObject\GameObjectHelpers.cs" />
-     <Compile Include="Assets\Input\GlobalInput.cs" />
-     <Compile Include="Assets\Input\InputEvent.cs" />
-     <Compile Include="Assets\Input\InputExample.cs" />
-     <Compile Include="Assets\Input\InputGUI.cs" />
-     <Compile Include="Assets\Input\InputManager.cs" />
-     <Compile Include="Assets\Input\InputReceiver.cs" />
-     <Compile Include="Assets\Input\Picker.cs" />
-     <Compile Include="Assets\Logging\Logging.cs" />
-     <Compile Include="Assets\Logging\TestFlightNLogTarget.cs" />
-     <Compile Include="Assets\Logging\UnityConsoleNlogTarget.cs" />
-     <Compile Include="Assets\Logging\UnityConsoleTraceListener.cs" />
-     <Compile Include="Assets\Maths\Pose.cs" />
-     <Compile Include="Assets\Scene\Find.cs" />
-     <Compile Include="Assets\Validity\Ensure.cs" />
-     <Compile Include="Assets\Validity\EnsureExample.cs" />
-     <Compile Include="Assets\Validity\ExampleMonoBehaviour1.cs" />
-     <Compile Include="Assets\Validity\ExampleMonoBehaviour2.cs" />
+     <Compile Include="Assets\Examples\ExposeEnumerable\TestExposeEnumerable.cs" />
+     <Compile Include="Assets\Examples\Input\GlobalInput.cs" />
+     <Compile Include="Assets\Examples\Input\InputExample.cs" />
+     <Compile Include="Assets\Examples\Input\InputGUI.cs" />
+     <Compile Include="Assets\Examples\Logging\TestFlightNLogTarget.cs" />
+     <Compile Include="Assets\Examples\Validity\EnsureExample.cs" />
+     <Compile Include="Assets\Examples\Validity\ExampleMonoBehaviour1.cs" />
+     <Compile Include="Assets\Examples\Validity\ExampleMonoBehaviour2.cs" />
+     <Compile Include="Assets\Scripts\Attributes\ExposeEnumerableAttribute.cs" />
+     <Compile Include="Assets\Scripts\Extensions\AnimationExtensions.cs" />
+     <Compile Include="Assets\Scripts\Extensions\GameObjectExtensions.cs" />
+     <Compile Include="Assets\Scripts\Extensions\TransformExtensions.cs" />
+     <Compile Include="Assets\Scripts\Extensions\Vector2Extensions.cs" />
+     <Compile Include="Assets\Scripts\Extensions\Vector3Extensions.cs" />
+     <Compile Include="Assets\Scripts\GameObject\GameObjectHelpers.cs" />
+     <Compile Include="Assets\Scripts\Input\InputEvent.cs" />
+     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
+     <Compile Include="Assets\Scripts\Input\InputReceiver.cs" />
+     <Compile Include="Assets\Scripts\Input\Picker.cs" />
+     <Compile Include="Assets\Scripts\Logging\Logging.cs" />
+     <Compile Include="Assets\Scripts\Logging\UnityConsoleNlogTarget.cs" />
+     <Compile Include="Assets\Scripts\Logging\UnityConsoleTraceListener.cs" />
+     <Compile Include="Assets\Scripts\Maths\Pose.cs" />
+     <Compile Include="Assets\Scripts\Scene\Find.cs" />
+     <Compile Include="Assets\Scripts\Validity\Ensure.cs" />
  <Reference Include="Assets\Plugins\CSharpKit">
  <HintPath>Assets\Plugins\CSharpKit.dll</HintPath>
  </Reference>
