@@ -4,5 +4,7 @@
 *.sublime-workspace
 unity/Library/
 unity/Temp/
+unity/*.sln
+unity/*.csproj
 iOS/
 src/bin/
