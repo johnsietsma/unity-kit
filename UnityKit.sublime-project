@@ -1,0 +1,22 @@
+{
+  "folders":
+  [
+    {
+      "path": "./",
+      "file_exclude_patterns": [ "*.meta" ]
+    }
+  ],
+  "settings":
+  {
+    "AStyleFormatter": {
+        "options_default": {
+            "style": "kr",
+            "pad-paren-in": true,
+            "break-closing-brackets": true,
+            "add-brackets": true,
+            "keep-one-line-blocks": true,
+            "keep-one-line-statements": true
+        }
+    }
+  }
+}

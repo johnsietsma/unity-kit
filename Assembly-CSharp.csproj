@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{19C7AE28-9ED7-0A7B-E3E9-8BC519A1D849}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_0_1;UNITY_4_0;UNITY_STANDALONE_OSX;ENABLE_PROFILER;UNITY_EDITOR;UNITY_TEAM_LICENSE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Attributes\ExposeEnumerableAttribute.cs" />
+     <Compile Include="Assets\ExposeEnumerable\TestExposeEnumerable.cs" />
+     <Compile Include="Assets\Extensions\AnimationExtensions.cs" />
+     <Compile Include="Assets\Extensions\GameObjectExtensions.cs" />
+     <Compile Include="Assets\Extensions\TransformExtensions.cs" />
+     <Compile Include="Assets\Extensions\Vector2Extensions.cs" />
+     <Compile Include="Assets\Extensions\Vector3Extensions.cs" />
+     <Compile Include="Assets\GameObject\GameObjectHelpers.cs" />
+     <Compile Include="Assets\Input\GlobalInput.cs" />
+     <Compile Include="Assets\Input\InputEvent.cs" />
+     <Compile Include="Assets\Input\InputExample.cs" />
+     <Compile Include="Assets\Input\InputGUI.cs" />
+     <Compile Include="Assets\Input\InputManager.cs" />
+     <Compile Include="Assets\Input\InputReceiver.cs" />
+     <Compile Include="Assets\Input\Picker.cs" />
+     <Compile Include="Assets\Logging\Logging.cs" />
+     <Compile Include="Assets\Logging\TestFlightNLogTarget.cs" />
+     <Compile Include="Assets\Logging\UnityConsoleNlogTarget.cs" />
+     <Compile Include="Assets\Logging\UnityConsoleTraceListener.cs" />
+     <Compile Include="Assets\Maths\Pose.cs" />
+     <Compile Include="Assets\Scene\Find.cs" />
+     <Compile Include="Assets\Validity\Ensure.cs" />
+     <Compile Include="Assets\Validity\EnsureExample.cs" />
+     <Compile Include="Assets\Validity\ExampleMonoBehaviour1.cs" />
+     <Compile Include="Assets\Validity\ExampleMonoBehaviour2.cs" />
+ <Reference Include="Assets\Plugins\CSharpKit">
+ <HintPath>Assets\Plugins\CSharpKit.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Plugins\GoKit">
+ <HintPath>Assets\Plugins\GoKit.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Plugins\NLog">
+ <HintPath>Assets\Plugins\NLog.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><MonoDevelop><Properties><Policies><TextStylePolicy RemoveTrailingWhitespace="True" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" /><CSharpFormattingPolicy IndentNamespaceBody="False" AlignEmbeddedIfStatements="False" PlaceElseOnNewLine="True" PlaceCatchOnNewLine="True" PlaceFinallyOnNewLine="True" BeforeMethodDeclarationParentheses="False" WithinMethodDeclarationParentheses="True" BeforeMethodCallParentheses="False" WithinMethodCallParentheses="True" BeforeConstructorDeclarationParentheses="False" WithinConstructorDeclarationParentheses="True" BeforeIndexerDeclarationBracket="False" WithinIndexerDeclarationBracket="True" BeforeDelegateDeclarationParentheses="False" WithinDelegateDeclarationParentheses="True" NewParentheses="False" IfParentheses="False" WhileParentheses="False" ForParentheses="False" ForeachParentheses="False" CatchParentheses="False" SwitchParentheses="False" LockParentheses="False" UsingParentheses="False" WithinIfParentheses="True" WithinWhileParentheses="True" WithinForParentheses="True" WithinForEachParentheses="True" WithinCatchParentheses="True" WithinSwitchParentheses="True" WithinLockParentheses="True" WithinUsingParentheses="True" WithinNewParentheses="True" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" /></Policies></Properties></MonoDevelop></ProjectExtensions>
+
+</Project>
