@@ -2,9 +2,10 @@
 *.userprefs
 .DS_Store
 *.sublime-workspace
-unity/Library/
-unity/Temp/
-unity/*.sln
-unity/*.csproj
+Library/
+!**/Library/*.asset
+Temp/
+*.sln
+*.csproj
 iOS/
-src/bin/
+bin/
