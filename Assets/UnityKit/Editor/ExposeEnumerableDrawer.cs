@@ -20,8 +20,10 @@ public class ExposeEnumerableDrawer : PropertyDrawer
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
         float height = LINE_HEIGHT;
-        var log = property.GetObjectValue() as IEnumerable;
-        if( log!=null && enumIsOut ) { foreach( System.Object o in log ) { height += LINE_HEIGHT; } }
+        if( enumIsOut ) {
+            var e = property.GetObjectValue() as IEnumerable;
+            height += e.Count() * LINE_HEIGHT;
+        }
         return height;
     }
 

@@ -31,6 +31,11 @@ public static class GameObjectExtensions
         return go.transform.Parents().Select( t => t.gameObject );
     }
 
+    public static T GetComponentInParents<T>( this GameObject go ) where T : Component {
+        GameObject goParent = go.Parents().FirstOrDefault( g=>g.HasComponent<T>() );
+        return goParent==null ? null : goParent.GetComponent<T>();
+    }
+
     public static void SetChildrenActive( this GameObject go, bool active ) {
         foreach( Transform childTransform in go.transform ) {
             childTransform.gameObject.SetActive( active );
