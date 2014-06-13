@@ -1,4 +1,4 @@
 unity-kit
 =========
 
-Helpfull Unity stuff.
+Helpful Unity stuff.
