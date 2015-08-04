@@ -61,12 +61,12 @@ public static class Check
 
     public static void Null( object obj, string message="Object isn't null" )
     {
-        True( obj == null, message );
+        True( obj == null || obj.Equals(null), message );
     }
 
     public static void NotNull( object obj, string message="null object" )
     {
-        True( obj != null, message );
+        True( obj != null && !obj.Equals(null), message );
     }
  
     public static void NotEmpty<T>( T[] array, string message="Empty array" )
