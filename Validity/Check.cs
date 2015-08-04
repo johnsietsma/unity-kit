@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 
 public static class Check
 {
@@ -68,6 +68,11 @@ public static class Check
     {
         True( obj != null && !obj.Equals(null), message );
     }
+
+    public static void NotDefault<T>(T obj, string message = "null object")
+    {
+        False(EqualityComparer<T>.Default.Equals(obj, default(T)), message);
+    }
  
     public static void NotEmpty<T>( T[] array, string message="Empty array" )
     {
@@ -78,5 +83,10 @@ public static class Check
     {
         NotNull( array, message );
         NotEmpty( array, message );
+    }
+
+    public static void NotNullOrEmpty(string str, string message = "Null or empty string")
+    {
+        False(string.IsNullOrEmpty(str), message);
     }
 }

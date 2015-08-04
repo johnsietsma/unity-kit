@@ -9,6 +9,23 @@ public static class Ensure
         return t;
     }
 
+    // Retrieves a Component and adds it if it doesn't exist.
+    public static T EnsureComponent<T>(this GameObject go) where T : Component
+    {
+        T t = go.GetComponent<T>();
+        if (t == null)
+        {
+            t = go.AddComponent<T>();
+        }
+        return t;
+    }
+
+    // Retrieves a Component and adds it if it doesn't exist.
+    public static T EnsureComponent<T>(this MonoBehaviour mb) where T : Component
+    {
+        return mb.gameObject.EnsureComponent<T>();
+    }
+
     // Just like GetComponent(), but will log an error if the Component is not found.
     public static T GetComponentChecked<T>( this GameObject go ) where T : Component
     {
